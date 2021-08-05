@@ -51,6 +51,16 @@ const useStyles = makeStyles(theme => ({
     ...theme.typography.tab,
     minWidth: 100,
     marginLeft: '35px'
+  },
+  menu: {
+    backgroundColor: theme.palette.common.blue
+  },
+  menuItem: {
+    ...theme.typography.tab,
+    opacity: 0.7,
+    '&:hover': {
+      opacity: 1
+    }
   }
 }));
 
@@ -59,6 +69,7 @@ export default function Header(props) {
   const [value, setValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleChange = (e, value) => {
     setValue(value);
@@ -69,10 +80,23 @@ export default function Header(props) {
     setOpen(true);
   };
 
+  const handleMenuItemClick = (e, i) => {
+    setAnchorEl(null);
+    setOpen(false);
+    setSelectedIndex(i);
+  };
+
   const handleClose = e => {
     setAnchorEl(null);
     setOpen(false);
   };
+
+  const menuOptions = [
+    { name: 'Aprende', link: '/aprende' },
+    { name: 'Vino', link: '/vino' },
+    { name: 'Destilados', link: '/destilados' },
+    { name: 'cafe', link: '/cafe' }
+  ];
 
   useEffect(() => {
     if (window.location.pathname === '/' && value !== 0) {
@@ -146,11 +170,13 @@ export default function Header(props) {
               anchorEl={anchorEl}
               open={open}
               onClose={handleClose}
+              classes={{ paper: classes.menu }}
               MenuListProps={{ onMouseLeave: handleClose }}
+              elevation={0}
             >
-              <MenuItem onClick={handleClose}>Vino</MenuItem>
-              <MenuItem onClick={handleClose}>Destilados</MenuItem>
-              <MenuItem onClick={handleClose}>Café / Te</MenuItem>
+              {menuOptions.map((option, i) => (
+                <MenuItem>{option.name}</MenuItem>
+              ))}
             </Menu>
           </Toolbar>
         </AppBar>
