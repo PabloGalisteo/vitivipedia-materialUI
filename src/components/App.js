@@ -16,7 +16,7 @@ import Aragon from './ui/comunidades/Aragon';
 
 function App() {
   const [mapas, showMapas] = useState(true);
-  // const toggleMapas = () => showMapas(!showMapas);
+  const toggleMapas = () => showMapas(!mapas);
 
   return (
     <ThemeProvider theme={theme}>
@@ -33,12 +33,10 @@ function App() {
       <div>
         <Espana />
         <img src={EspanaMapa} alt="España"></img>
-        <Andalucia
-          onClick={() => {
-            showMapas(!mapas);
-          }}
-        />
+        <Andalucia onClick={toggleMapas} />
         {mapas && <img src={AndaluciaMapa} alt="Andalucia"></img>}
+        <Aragon onClick={toggleMapas} />
+        {mapas && <img src={AragonMapa} alt="Aragon"></img>}
       </div>
     </ThemeProvider>
   );

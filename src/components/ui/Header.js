@@ -95,7 +95,7 @@ export default function Header(props) {
     { name: 'Aprende', link: '/aprende' },
     { name: 'Vino', link: '/vino' },
     { name: 'Destilados', link: '/destilados' },
-    { name: 'cafe', link: '/cafe' }
+    { name: 'café', link: '/cafe' }
   ];
 
   useEffect(() => {
@@ -109,6 +109,52 @@ export default function Header(props) {
       setValue(3);
     } else if (window.location.pathname === '/contacto' && value !== 4) {
       setValue(4);
+    }
+
+    switch (window.location.pathname) {
+      case '/':
+        if (value !== 0) {
+          setValue(0);
+        }
+        break;
+      case '/aprende':
+        if (value !== 3) {
+          setValue(3);
+          setSelectedIndex(0);
+        }
+        break;
+      case '/vino':
+        if (value !== 3) {
+          setValue(1);
+        }
+        break;
+      case '/destilados':
+        if (value !== 3) {
+          setValue(2);
+        }
+        break;
+      case '/café':
+        if (value !== 3) {
+          setValue(3);
+          setSelectedIndex(3);
+        }
+        break;
+      case '/blog':
+        if (value !== 1) {
+          setValue(1);
+        }
+        break;
+      case '/sobre':
+        if (value !== 2) {
+          setValue(2);
+        }
+        break;
+      case '/contacto':
+        if (value !== 4) {
+          setValue(4);
+        }
+        break;
+      default:
     }
   }, [value]);
 
@@ -175,7 +221,20 @@ export default function Header(props) {
               elevation={0}
             >
               {menuOptions.map((option, i) => (
-                <MenuItem>{option.name}</MenuItem>
+                <MenuItem
+                  key={option}
+                  component={Link}
+                  to={option.link}
+                  classes={{ root: classes.menuItem }}
+                  onClick={event => {
+                    handleMenuItemClick(event, i);
+                    setValue(3);
+                    handleClose();
+                  }}
+                  selected={i === selectedIndex && value === 3}
+                >
+                  {option.name}
+                </MenuItem>
               ))}
             </Menu>
           </Toolbar>
