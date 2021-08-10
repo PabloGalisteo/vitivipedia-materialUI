@@ -2,9 +2,9 @@ import React from 'react';
 
 import Button from '@material-ui/core/Button';
 
-const BotonEspana = () => {
+const BotonEspana = ({onClick}) => {
   return (
-    <Button variant="contained" style={{ backgroundColor: '#A40A17' }}>
+    <Button onClick={onClick} variant="contained" style={{ backgroundColor: '#A40A17' }}>
       España
     </Button>
   );
