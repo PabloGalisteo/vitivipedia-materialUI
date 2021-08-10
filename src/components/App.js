@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 import { styled } from '@material-ui/core/styles';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import EspanaMapa from '../mapas/España.svg';
@@ -31,12 +32,26 @@ function App() {
         </Switch>
       </BrowserRouter>
       <div>
-        <Espana />
-        <img src={EspanaMapa} alt="España"></img>
-        <Andalucia onClick={toggleMapas} />
-        {mapas && <img src={AndaluciaMapa} alt="Andalucia"></img>}
-        <Aragon onClick={toggleMapas} />
-        {mapas && <img src={AragonMapa} alt="Aragon"></img>}
+
+        <Grid container >
+          <Grid item xs={ 3 } >
+            <Espana />
+            <Andalucia onClick={toggleMapas} />
+            <Aragon onClick={toggleMapas} />
+          </Grid>
+          <Grid item xs={ 9 }>
+            <img src={EspanaMapa} alt="España"></img>
+        
+            {mapas && <img src={AndaluciaMapa} alt="Andalucia"></img>}
+            
+            {mapas && <img src={AragonMapa} alt="Aragon"></img>}
+
+          </Grid>
+
+        </Grid>
+
+       
+       
       </div>
     </ThemeProvider>
   );
