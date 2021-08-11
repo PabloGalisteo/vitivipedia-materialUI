@@ -14,9 +14,16 @@ import { useTheme } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+
 
 import logo from '../../assets/logo.svg';
 import { className } from 'postcss-selector-parser';
+
+
+// import SidebarNavigation from '../SidebarNavigation';
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -256,11 +263,59 @@ export default function Header(props) {
       <SwipeableDrawer
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}
+        anchor="right"
         open={openDrawer}
         onClose={() => setOpenDrawer(false)}
         onOpen={() => setOpenDrawer(true)}
+        classes={{ paper: classes.drawer }}
       >
-        Example drawer
+        <List disablePadding>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to="/"
+          >
+            <ListItemText disableTypography>Inicio</ListItemText>
+          </ListItem>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to="/"
+          >
+            <ListItemText disableTypography>Blog</ListItemText>
+          </ListItem>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to="/"
+          >
+            <ListItemText disableTypography>Sobre</ListItemText>
+          </ListItem>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to="/"
+          >
+            <ListItemText disableTypography>Aprende</ListItemText>
+          </ListItem>
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to="/"
+          >
+            <ListItemText disableTypography>Contacto</ListItemText>
+          </ListItem>
+        </List>
       </SwipeableDrawer>
       <IconButton
         className={classes.drawerIconContainer}
