@@ -51,7 +51,7 @@ const useStyles = makeStyles(() => ({
     width: '100%'
   },
   marginBottomButton: {
-    marginBottom: '400px'
+    marginBottom: '1em'
   }
 }));
 
@@ -297,7 +297,10 @@ const Inicio = () => {
       <Grid container>
         <Grid item xs={2}>
           <div className={classes.sideBar}>
-            <Espana onClick={() => toggleMapas('Espana')} />
+            <Espana
+              marginButtton={classes.marginBottomButton}
+              onClick={() => toggleMapas('Espana')}
+            />
             <Andalucia onClick={() => toggleMapas('Andalucia')} />
             <Aragon onClick={() => toggleMapas('Aragon')} />
             <Asturias onClick={() => toggleMapas('Asturias')} />
