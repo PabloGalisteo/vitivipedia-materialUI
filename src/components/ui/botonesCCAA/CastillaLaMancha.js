@@ -2,12 +2,13 @@ import React from 'react';
 
 import Button from '@material-ui/core/Button';
 
-const BotonCastillaLaMancha = ({ onClick }) => {
+const BotonCastillaLaMancha = ({ onClick, marginButtton }) => {
   return (
     <Button
       onClick={onClick}
+      className={marginButtton}
       variant="contained"
-      style={{ backgroundColor: '#831F36' }}
+      style={{ backgroundColor: '#EC6B15' }}
     >
       Castilla La Mancha
     </Button>
