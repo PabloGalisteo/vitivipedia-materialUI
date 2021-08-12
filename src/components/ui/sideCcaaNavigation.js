@@ -2,33 +2,35 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 // -------- botones ----------- //
-import Espana from '../ui/botonesCCAA/Espana';
-import Andalucia from '../ui/botonesCCAA/Andalucia';
-import Aragon from '../ui/botonesCCAA/Aragon';
-import Asturias from '../ui/botonesCCAA/Asturias';
-import Cantabria from '../ui/botonesCCAA/Cantabria';
-import CastillaLaMancha from '../ui/botonesCCAA/CastillaLaMancha';
-import CastillaLeon from '../ui/botonesCCAA/CastillaLeon';
-import Cataluna from '../ui/botonesCCAA/Cataluna';
-import Extremadura from '../ui/botonesCCAA/Extremadura';
-import Galicia from '../ui/botonesCCAA/Galicia';
-import IslasBaleares from '../ui/botonesCCAA/IslasBaleares';
-import IslasCanarias from '../ui/botonesCCAA/IslasCanarias';
-import Madrid from '../ui/botonesCCAA/Madrid';
-import Murcia from '../ui/botonesCCAA/Murcia';
-import Navarra from '../ui/botonesCCAA/Navarra';
-import PaisVasco from '../ui/botonesCCAA/PaisVasco';
-import Rioja from '../ui/botonesCCAA/Rioja';
-import Valencia from '../ui/botonesCCAA/Valencia';
+import Espana from './botonesCCAA/Espana';
+import Andalucia from './botonesCCAA/Andalucia';
+import Aragon from './botonesCCAA/Aragon';
+import Asturias from './botonesCCAA/Asturias';
+import Cantabria from './botonesCCAA/Cantabria';
+import CastillaLaMancha from './botonesCCAA/CastillaLaMancha';
+import CastillaLeon from './botonesCCAA/CastillaLeon';
+import Cataluna from './botonesCCAA/Cataluna';
+import Extremadura from './botonesCCAA/Extremadura';
+import Galicia from './botonesCCAA/Galicia';
+import IslasBaleares from './botonesCCAA/IslasBaleares';
+import IslasCanarias from './botonesCCAA/IslasCanarias';
+import Madrid from './botonesCCAA/Madrid';
+import Murcia from './botonesCCAA/Murcia';
+import Navarra from './botonesCCAA/Navarra';
+import PaisVasco from './botonesCCAA/PaisVasco';
+import Rioja from './botonesCCAA/Rioja';
 
 const useStyles = makeStyles(() => ({
   sideBar: {
     display: 'flex',
     flexDirection: 'column'
+  },
+  marginBottomButton: {
+    marginBottom: '0.66em'
   }
 }));
 
-const sideCcaaNavigation = ({ toggleMapas }) => {
+const SideCcaaNavigation = ({ toggleMapas }) => {
   const classes = useStyles();
 
   return (
@@ -101,12 +103,8 @@ const sideCcaaNavigation = ({ toggleMapas }) => {
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('Rioja')}
       />
-      <Valencia
-        marginButtton={classes.marginBottomButton}
-        onClick={() => toggleMapas('Valencia')}
-      />
     </div>
   );
 };
 
-export default sideCcaaNavigation;
+export default SideCcaaNavigation;

@@ -263,6 +263,7 @@ export default function Header(props) {
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}
         open={openDrawer}
+        anchor="right"
         onClose={() => setOpenDrawer(false)}
         onOpen={() => setOpenDrawer(true)}
         classes={{ paper: classes.drawer }}
