@@ -5,24 +5,24 @@ import Button from '@material-ui/core/Button';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 
 // -------- mapas ----------- //
-import EspanaMapa from '../mapas/España.svg';
-import AndaluciaMapa from '../mapas/Andalucía-a.svg';
-import AragonMapa from '../mapas/Aragón.svg';
-import AsturiasMapa from '../mapas/Asturias.svg';
-import CantabriaMapa from '../mapas/Cantabria.svg';
-import CastillaLaManchaMapa from '../mapas/Castilla-la-Mancha.svg';
-import CastillaLeonMapa from '../mapas/Castilla y León.svg';
-import CatalunaMapa from '../mapas/Cataluña.svg';
-import ExtremaduraMapa from '../mapas/Extremadura.svg';
-import GaliciaMapa from '../mapas/Galicia.svg';
-import IslasBalearesMapa from '../mapas/Islas Baleares.svg';
-import IslasCanariasMapa from '../mapas/Islas Canarias.svg';
-import MadridMapa from '../mapas/Madrid.svg';
-import MurciaMapa from '../mapas/Murcia.svg';
-import NavarraMapa from '../mapas/Navarra.svg';
-import PaisVascoMapa from '../mapas/País Vasco.svg';
-import RiojaMapa from '../mapas/Rioja.svg';
-import ValenciaMapa from '../mapas/Valencia.svg';
+import {ReactComponent as EspanaMapa} from '../mapas/España.svg';
+import {ReactComponent as AndaluciaMapa} from '../mapas/Andalucía-a.svg';
+import {ReactComponent as AragonMapa} from '../mapas/Aragón.svg';
+import {ReactComponent as AsturiasMapa} from '../mapas/Asturias.svg';
+import {ReactComponent as CantabriaMapa} from '../mapas/Cantabria.svg';
+import {ReactComponent as CastillaLaManchaMapa} from '../mapas/Castilla-la-Mancha.svg';
+import {ReactComponent as CastillaLeonMapa} from '../mapas/Castilla y León.svg';
+import {ReactComponent as CatalunaMapa} from '../mapas/Cataluña.svg';
+import {ReactComponent as ExtremaduraMapa} from '../mapas/Extremadura.svg';
+import {ReactComponent as GaliciaMapa} from '../mapas/Galicia.svg';
+import {ReactComponent as IslasBalearesMapa} from '../mapas/Islas Baleares.svg';
+import {ReactComponent as IslasCanariasMapa} from '../mapas/Islas Canarias.svg';
+import {ReactComponent as MadridMapa} from '../mapas/Madrid.svg';
+import {ReactComponent as MurciaMapa} from '../mapas/Murcia.svg';
+import {ReactComponent as NavarraMapa} from '../mapas/Navarra.svg';
+import {ReactComponent as PaisVascoMapa} from '../mapas/País Vasco.svg';
+import {ReactComponent as RiojaMapa} from '../mapas/Rioja.svg';
+// import {ReactComponent as ValenciaMapa} from '../mapas/Valencia.svg';
 
 
 import SidebarNavigation from '../components/SidebarNavigation';
@@ -51,7 +51,8 @@ import SidebarNavigation from '../components/SidebarNavigation';
 // default spacing for material ui is 8 px
 const useStyles = makeStyles((theme) => ({
   width: {
-    width: '100%'
+    width: '100%',
+    opacity: 0.4
   },
   marginBottomButton: {
     // marginBottom: '400px'
@@ -156,17 +157,21 @@ const Inicio = () => {
       component: RiojaMapa,
       isVisible: false
     },
-    {
-      name: 'Valencia',
-      component: ValenciaMapa,
-      isVisible: false
-    },
+    // {
+    //   name: 'Valencia',
+    //   component: ValenciaMapa,
+    //   isVisible: false
+    // },
   ]);
   const [openDrawer, setOpenDrawer] = useState(false);
- 
   const classes = useStyles();
 
-  const toggleMapas = mapName => {
+  // const showMessage = ( value ) => {
+  //   // result will be, "this is test"
+  //   console.log(value);
+  // }
+
+  const toggleMapas = (mapName) => {
     //const updatedMapsList = mapsList.splice();
     const updatedMapsList = [...mapsList];
     
@@ -181,6 +186,8 @@ const Inicio = () => {
     setOpenDrawer(false);
 
   };
+
+  // showMessage('this is test');
 
   // xs={4} => sm={4} md={4} lg={4} xl={4}
   // xs={4} lg={2} => xs={4} sm={4} md={4} lg={2} xl={2}
@@ -213,7 +220,7 @@ const Inicio = () => {
               return null;
             }
             // this will not run if condition is true;
-            return  <img
+            return <map.component
             className={classes.width}
             src={map.component}
             alt="Valencia"

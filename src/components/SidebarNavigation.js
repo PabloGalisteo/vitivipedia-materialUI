@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Espana from '../components/ui/botonesCCAA/Espana';
@@ -18,7 +18,7 @@ import Murcia from '../components/ui/botonesCCAA/Murcia';
 import Navarra from '../components/ui/botonesCCAA/Navarra';
 import PaisVasco from '../components/ui/botonesCCAA/PaisVasco';
 import Rioja from '../components/ui/botonesCCAA/Rioja';
-import Valencia from '../components/ui/botonesCCAA/Valencia';
+// import Valencia from '../components/ui/botonesCCAA/Valencia';
 
 const useStyles = makeStyles(() => ({
     sideBar: {
@@ -28,9 +28,33 @@ const useStyles = makeStyles(() => ({
 
   }));
 
-const SidebarNavigation = ({ toggleMapas }) => {
-    const classes = useStyles();
+const SidebarNavigation = ( { toggleMapas } ) => {
+  const classes = useStyles();
+    // const [getX, setX] = useState(0);
+    
+    // setTimeout(() => {
+    //   setX(5);
+    // }, 5000);
+  
 
+    // takes two parameters
+    // first one is callback
+    // second one is dependency
+    // useEffect(() => {
+    //   console.log('running');
+    // }, [getX])
+
+    // will only run once, when this component is initiated
+    // useEffect(() => {
+      // console.log('called once');
+    //   toggleMapas('Andalucia');
+    // }, []);
+
+    // useEffect(() => {
+    //   console.log('called many times');
+    // });
+
+    
     return (
         <div className={classes.sideBar}>
             <Espana onClick={() => toggleMapas('Espana')} />
@@ -50,7 +74,7 @@ const SidebarNavigation = ({ toggleMapas }) => {
             <Navarra onClick={() => toggleMapas('Navarra')} />
             <PaisVasco onClick={() => toggleMapas('PaisVasco')} />
             <Rioja onClick={() => toggleMapas('Rioja')} />
-            <Valencia onClick={() => toggleMapas('Valencia')} />
+            {/* <Valencia onClick={() => toggleMapas('Valencia')} /> */}
           </div>
     )
 }

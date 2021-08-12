@@ -20,7 +20,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 
 import logo from '../../assets/logo.svg';
-import { className } from 'postcss-selector-parser';
 
 
 // import SidebarNavigation from '../SidebarNavigation';
