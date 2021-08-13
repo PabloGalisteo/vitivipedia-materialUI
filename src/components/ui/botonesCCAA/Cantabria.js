@@ -2,12 +2,12 @@ import React from 'react';
 
 import Button from '@material-ui/core/Button';
 
-const BotonCantabria = ({ onClick }) => {
+const BotonCantabria = ({ onClick, isActive }) => {
   return (
     <Button
       onClick={onClick}
       variant="contained"
-      style={{ backgroundColor: '#D3141A' }}
+      style={{ backgroundColor: '#D3141A', opacity: isActive ? 1 : 0.4 }}
     >
       Cantabria
     </Button>

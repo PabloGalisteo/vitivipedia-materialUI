@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 
 // -------- mapas ----------- //
-import {ReactComponent as EspanaMapa} from '../mapas/España.svg';
+import EspanaMapa from '../mapas/España.js';
 import {ReactComponent as AndaluciaMapa} from '../mapas/Andalucía-a.svg';
 import {ReactComponent as AragonMapa} from '../mapas/Aragón.svg';
 import {ReactComponent as AsturiasMapa} from '../mapas/Asturias.svg';
@@ -52,7 +53,6 @@ import SidebarNavigation from '../components/SidebarNavigation';
 const useStyles = makeStyles((theme) => ({
   width: {
     width: '100%',
-    opacity: 0.4
   },
   marginBottomButton: {
     // marginBottom: '400px'
@@ -67,7 +67,11 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'none'
     }
-  }
+  },
+  mapContainer: {
+    backgroundColor: '#daf7ff'
+  },
+  
 }));
 
 const Inicio = () => {
@@ -164,6 +168,7 @@ const Inicio = () => {
     // },
   ]);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [currentRegion, setCurrentRegion] = useState('');
   const classes = useStyles();
 
   // const showMessage = ( value ) => {
@@ -204,28 +209,29 @@ const Inicio = () => {
         onOpen={() => setOpenDrawer(true)}
         classes={{ paper: classes.drawer }}
       >
-         <SidebarNavigation toggleMapas={toggleMapas} />
+         <SidebarNavigation hoverElement={currentRegion} toggleMapas={toggleMapas} />
       </SwipeableDrawer>
         <Grid item md={2} xs={12} className={[classes.hideButtons, classes.marginBottomButton].join(' ')} >
-          <SidebarNavigation toggleMapas={toggleMapas} />
+          <SidebarNavigation hoverElement={currentRegion} toggleMapas={toggleMapas} />
         </Grid>
         <Grid item md={10} xs={12} >
           <Button variant="contained" className={classes.navigationToggler} onClick={() => setOpenDrawer(true)}>
             Toggle Navigation
           </Button>
-          {mapsList.map((map, index) => {
-            // const componentName = map.component;
-            // return <componentName /> 
-            if(! map.isVisible) {
-              return null;
-            }
-            // this will not run if condition is true;
-            return <map.component
-            className={classes.width}
-            src={map.component}
-            alt="Valencia"
-           /> 
-          } )}
+          <Box color="text.primary"  className={classes.mapContainer}>
+            {mapsList.map((map, index) => {
+              // const componentName = map.component;
+              // return <componentName /> 
+              if(! map.isVisible) {
+                return null;
+              }
+              // this will not run if condition is true;
+              return <map.component key={index}
+              onRegionSelected={setCurrentRegion}
+              className={classes.width}
+            /> 
+            } )}
+           </Box>
 
         </Grid>
       </Grid>

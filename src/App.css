@@ -1,4 +1,10 @@
 
-#mancha:hover {
-    fill: #333;
+svg {
+    cursor: pointer;
+}
+svg .region {
+    opacity: 0.45;
+}
+svg .region:hover {
+    opacity: 1;
 }

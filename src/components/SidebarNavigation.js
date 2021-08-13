@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
 
   }));
 
-const SidebarNavigation = ( { toggleMapas } ) => {
+const SidebarNavigation = ( { toggleMapas, hoverElement } ) => {
   const classes = useStyles();
     // const [getX, setX] = useState(0);
     
@@ -57,22 +57,22 @@ const SidebarNavigation = ( { toggleMapas } ) => {
     
     return (
         <div className={classes.sideBar}>
-            <Espana onClick={() => toggleMapas('Espana')} />
-            <Andalucia onClick={() => toggleMapas('Andalucia')} />
-            <Aragon onClick={() => toggleMapas('Aragon')} />
-            <Asturias onClick={() => toggleMapas('Asturias')} />
-            <Cantabria onClick={() => toggleMapas('Cantabria')} />
-            <CastillaLaMancha onClick={() => toggleMapas('CastillaLaMancha')} />
-            <CastillaLeon onClick={() => toggleMapas('CastillaLeon')} />
-            <Cataluna onClick={() => toggleMapas('Cataluna')} />
-            <Extremadura onClick={() => toggleMapas('Extremadura')} />
-            <Galicia onClick={() => toggleMapas('Galicia')} />
-            <IslasBaleares onClick={() => toggleMapas('IslasBaleares')} />
-            <IslasCanarias onClick={() => toggleMapas('IslasCanarias')} />
-            <Madrid onClick={() => toggleMapas('Madrid')} />
-            <Murcia onClick={() => toggleMapas('Murcia')} />
-            <Navarra onClick={() => toggleMapas('Navarra')} />
-            <PaisVasco onClick={() => toggleMapas('PaisVasco')} />
+            <Espana onClick={() => toggleMapas('Espana')} isActive={ hoverElement === 'Espana' ? true: false }  />
+            <Andalucia onClick={() => toggleMapas('Andalucia')} isActive={ hoverElement === 'Andalucia' ? true: false } />
+            <Aragon onClick={() => toggleMapas('Aragon')} isActive={ hoverElement === 'Aragon' ? true: false } />
+            <Asturias onClick={() => toggleMapas('Asturias')} isActive={ hoverElement === 'Asturias' ? true: false } />
+            <Cantabria onClick={() => toggleMapas('Cantabria')} isActive={ hoverElement === 'Cantabria' ? true: false } />
+            <CastillaLaMancha onClick={() => toggleMapas('CastillaLaMancha')} isActive={ hoverElement === 'CastillaLaMancha' ? true: false } />
+            <CastillaLeon onClick={() => toggleMapas('CastillaLeon')} isActive={ hoverElement === 'CastillaLeon' ? true: false } />
+            <Cataluna onClick={() => toggleMapas('Cataluna')} isActive={ hoverElement === 'Cataluna' ? true: false } />
+            <Extremadura onClick={() => toggleMapas('Extremadura')} isActive={ hoverElement === 'Extremadura' ? true: false } />
+            <Galicia onClick={() => toggleMapas('Galicia')} isActive={ hoverElement === 'Galicia' ? true: false } />
+            <IslasBaleares onClick={() => toggleMapas('IslasBaleares')} isActive={ hoverElement === 'IslasBaleares' ? true: false } />
+            <IslasCanarias onClick={() => toggleMapas('IslasCanarias')} isActive={ hoverElement === 'IslasCanarias' ? true: false } />
+            <Madrid onClick={() => toggleMapas('Madrid')} isActive={ hoverElement === 'Madrid' ? true: false } />
+            <Murcia onClick={() => toggleMapas('Murcia')} isActive={ hoverElement === 'Murcia' ? true: false } />
+            <Navarra onClick={() => toggleMapas('Navarra')}  isActive={ hoverElement === 'Navarra' ? true: false } />
+            <PaisVasco onClick={() => toggleMapas('PaisVasco')} isActive={ hoverElement === 'PaisVasco' ? true: false } />
             <Rioja onClick={() => toggleMapas('Rioja')} />
             {/* <Valencia onClick={() => toggleMapas('Valencia')} /> */}
           </div>
