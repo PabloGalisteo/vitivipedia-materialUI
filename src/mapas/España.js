@@ -1,6 +1,14 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 
-const Espana = ({ onRegionSelected }) => {
+const useStyles = makeStyles(() => ({
+  highlight: {
+    opacity: 1
+  }
+}));
+
+const Espana = ({ onRegionSelected, currentRegion }) => {
+  const styleClasses = useStyles();
   const onHover = regionName => {
     onRegionSelected(regionName);
   };
@@ -1509,7 +1517,10 @@ const Espana = ({ onRegionSelected }) => {
       </g>
       <g
         id="ast"
-        className="region"
+        className={[
+          'region',
+          currentRegion === 'Asturias' ? '' : styleClasses.highlight
+        ].join(' ')}
         onMouseEnter={() => onHover('Asturias')}
         onMouseLeave={() => onLeave()}
         region="espana/asturias"
