@@ -26,11 +26,13 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'column'
   },
   marginBottomButton: {
-    marginBottom: '0.66em'
+    marginBottom: '0.76em',
+    marginLeft: '1.7em',
+    marginRight: '1.2em'
   }
 }));
 
-const SideCcaaNavigation = ({ toggleMapas }) => {
+const SideCcaaNavigation = ({ toggleMapas, currentRegion }) => {
   const classes = useStyles();
 
   return (
@@ -38,70 +40,87 @@ const SideCcaaNavigation = ({ toggleMapas }) => {
       <Espana
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('Espana')}
+        isActive={currentRegion === 'Espana' ? true : false}
       />
       <Andalucia
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('Andalucia')}
+        isActive={currentRegion === 'Andalucia' ? true : false}
       />
       <Aragon
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('Aragon')}
+        isActive={currentRegion === 'Aragon' ? true : false}
       />
       <Asturias
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('Asturias')}
+        isActive={currentRegion === 'Asturias' ? true : false}
       />
       <Cantabria
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('Cantabria')}
+        isActive={currentRegion === 'Cantabria' ? true : false}
       />
       <CastillaLaMancha
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('CastillaLaMancha')}
+        isActive={currentRegion === 'CastillaLaMancha' ? true : false}
       />
       <CastillaLeon
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('CastillaLeon')}
+        isActive={currentRegion === 'CastillaLeon' ? true : false}
       />
       <Cataluna
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('Cataluna')}
+        isActive={currentRegion === 'Cataluna' ? true : false}
       />
       <Extremadura
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('Extremadura')}
+        isActive={currentRegion === 'Extremadura' ? true : false}
       />
       <Galicia
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('Galicia')}
+        isActive={currentRegion === 'Galicia' ? true : false}
       />
       <IslasBaleares
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('IslasBaleares')}
+        isActive={currentRegion === 'IslasBaleares' ? true : false}
       />
       <IslasCanarias
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('IslasCanarias')}
+        isActive={currentRegion === 'IslasCanarias' ? true : false}
       />
       <Madrid
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('Madrid')}
+        isActive={currentRegion === 'Madrid' ? true : false}
       />
       <Murcia
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('Murcia')}
+        isActive={currentRegion === 'Murcia' ? true : false}
       />
       <Navarra
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('Navarra')}
+        isActive={currentRegion === 'Navarra' ? true : false}
       />
       <PaisVasco
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('PaisVasco')}
+        isActive={currentRegion === 'PaisVasco' ? true : false}
       />
       <Rioja
         marginButtton={classes.marginBottomButton}
         onClick={() => toggleMapas('Rioja')}
+        isActive={currentRegion === 'Rioja' ? true : false}
       />
     </div>
   );

@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { styled, makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Inicio from '../pages/Inicio';

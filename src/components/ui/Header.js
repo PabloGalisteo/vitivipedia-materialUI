@@ -19,7 +19,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import logo from '../../assets/logo.svg';
-import { className } from 'postcss-selector-parser';
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -95,6 +94,14 @@ const useStyles = makeStyles(theme => ({
   },
   drawer: {
     backgroundColor: theme.palette.common.blue
+  },
+  drawerItem: {
+    ...theme.typography.tab,
+    color: theme.palette.common.blue,
+    opacity: 0.7
+  },
+  drawerItemSelected: {
+    opacity: 1
   }
 }));
 
@@ -270,49 +277,114 @@ export default function Header(props) {
       >
         <List disablePadding>
           <ListItem
-            onClick={() => setOpenDrawer(false)}
+            onClick={() => {
+              setOpenDrawer(false);
+              setValue(0);
+            }}
             divider
             button
             component={Link}
             to="/"
+            selected={value === 0}
           >
-            <ListItemText disableTypography>Inicio</ListItemText>
+            <ListItemText
+              className={
+                value === 0
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+              disableTypography
+            >
+              Inicio
+            </ListItemText>
           </ListItem>
           <ListItem
-            onClick={() => setOpenDrawer(false)}
+            onClick={() => {
+              setOpenDrawer(false);
+              setValue(1);
+            }}
             divider
             button
             component={Link}
-            to="/"
+            to="/blog"
+            selected={value === 1}
           >
-            <ListItemText disableTypography>Blog</ListItemText>
+            <ListItemText
+              className={
+                value === 1
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+              disableTypography
+            >
+              Blog
+            </ListItemText>
           </ListItem>
           <ListItem
-            onClick={() => setOpenDrawer(false)}
+            onClick={() => {
+              setOpenDrawer(false);
+              setValue(2);
+            }}
             divider
             button
             component={Link}
-            to="/"
+            to="/sobre"
+            selected={value === 2}
           >
-            <ListItemText disableTypography>Sobre</ListItemText>
+            <ListItemText
+              className={
+                value === 2
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+              disableTypography
+            >
+              Sobre
+            </ListItemText>
           </ListItem>
           <ListItem
-            onClick={() => setOpenDrawer(false)}
+            onClick={() => {
+              setOpenDrawer(false);
+              setValue(3);
+            }}
             divider
             button
             component={Link}
-            to="/"
+            to="/aprende"
+            selected={value === 3}
           >
-            <ListItemText disableTypography>Aprende</ListItemText>
+            <ListItemText
+              className={
+                value === 3
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+              disableTypography
+            >
+              Aprende
+            </ListItemText>
           </ListItem>
           <ListItem
-            onClick={() => setOpenDrawer(false)}
+            onClick={() => {
+              setOpenDrawer(false);
+              setValue(4);
+            }}
             divider
             button
             component={Link}
-            to="/"
+            to="/contacto"
+            selected={value === 4}
           >
-            <ListItemText disableTypography>Contacto</ListItemText>
+            <ListItemText
+              className={
+                value === 4
+                  ? [classes.drawerItem, classes.drawerItemSelected]
+                  : classes.drawerItem
+              }
+              disableTypography
+            >
+              Contacto
+            </ListItemText>
           </ListItem>
         </List>
       </SwipeableDrawer>

@@ -1,3 +1,11 @@
-#mapa-asturias {
-  color: #0c0b0b;
+#espana {
+  opacity: 0.7;
+}
+
+svg .region {
+  opacity: 0.45;
+  cursor: pointer;
+}
+svg .region:hover {
+  opacity: 1;
 }

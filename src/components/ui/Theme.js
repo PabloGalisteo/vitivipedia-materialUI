@@ -1,19 +1,19 @@
-import { createMuiTheme, createTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from '@material-ui/core/styles';
 
-const arcBlue = '#ffd4d4';
-const arcOrange = '#000000';
+const mainColor = '#eeeeee';
+const secondaryColor = '#000000';
 
 export default createMuiTheme({
   palette: {
     common: {
-      blue: `${arcBlue}`,
-      orange: `${arcOrange}`
+      main: `${mainColor}`,
+      second: `${secondaryColor}`
     },
     primary: {
-      main: `${arcBlue}`
+      main: `${mainColor}`
     },
     secondary: {
-      main: `${arcOrange}`
+      main: `${secondaryColor}`
     }
   },
   typography: {
