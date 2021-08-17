@@ -7,7 +7,7 @@ const BotonComponent = ({
   isActive,
   title,
   buttonColor,
-  hoverButtonList,
+  hoverButtonList, // holds the refrence/address of setCurrentRegion
   value
 }) => {
   console.log(buttonColor);

@@ -1,20 +1,34 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(() => ({
   highlight: {
-    opacity: 1
-  }
+    opacity: 0.45,
+  },
 }));
 
-const Espana = ({ onRegionSelected, currentRegion }) => {
+const Espana = ({ onRegionSelected, currentRegion, toggleMapas }) => {
   const styleClasses = useStyles();
-  const onHover = regionName => {
+
+  const onHover = (regionName) => {
     onRegionSelected(regionName);
   };
+
   const onLeave = () => {
-    onRegionSelected('');
+    onRegionSelected("");
   };
+
+  const onRegionClicked = (region) => {
+    toggleMapas(region);
+  };
+
+  const getRegionClassNames = (region) => {
+    return [
+      "region",
+      currentRegion === region ? styleClasses.highlight : "",
+    ].join(" ");
+  };
+
   return (
     <svg viewBox="0 0 1190.6 883.3">
       <g id="exterior">
@@ -1515,14 +1529,13 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         s-2,2.9-4.1,4.5c-2.1,1.6-4.4,2.9-4.4,2.9"
         ></path>
       </g>
+
       <g
         id="ast"
-        className={[
-          'region',
-          currentRegion === 'Asturias' ? '' : styleClasses.highlight
-        ].join(' ')}
-        onMouseEnter={() => onHover('Asturias')}
+        className={ getRegionClassNames("Asturias")}
+        onMouseEnter={() => onHover("Asturias")}
         onMouseLeave={() => onLeave()}
+        onClick={() => onRegionClicked("Asturias")}
         region="espana/asturias"
       >
         <g>
@@ -1558,7 +1571,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       <g
         id="rio"
         className="region"
-        onMouseEnter={() => onHover('Rioja')}
+        onMouseEnter={() => onHover("Rioja")}
         onMouseLeave={() => onLeave()}
         region="espana/rioja"
       >
@@ -1599,7 +1612,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       <g
         id="leo"
         className="region"
-        onMouseEnter={() => onHover('CastillaLeon')}
+        onMouseEnter={() => onHover("CastillaLeon")}
         onMouseLeave={() => onLeave()}
         region="espana/castilla-y-leon"
       >
@@ -1932,7 +1945,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       <g
         id="ext"
         className="region"
-        onMouseEnter={() => onHover('Extremadura')}
+        onMouseEnter={() => onHover("Extremadura")}
         onMouseLeave={() => onLeave()}
         region="espana/extremadura"
       >
@@ -2111,7 +2124,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         id="cat"
         className="region"
         region="espana/cataluna"
-        onMouseEnter={() => onHover('Cataluna')}
+        onMouseEnter={() => onHover("Cataluna")}
         onMouseLeave={() => onLeave()}
       >
         <g>
@@ -2384,7 +2397,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         id="and"
         className="region"
         region="espana/andalucia"
-        onMouseEnter={() => onHover('Andalucia')}
+        onMouseEnter={() => onHover("Andalucia")}
         onMouseLeave={() => onLeave()}
       >
         <path
@@ -2692,7 +2705,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         id="ara"
         className="region"
         region="espana/aragon"
-        onMouseEnter={() => onHover('Aragon')}
+        onMouseEnter={() => onHover("Aragon")}
         onMouseLeave={() => onLeave()}
       >
         <path
@@ -2792,7 +2805,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       <g
         id="man"
         className="region"
-        onMouseOver={() => onHover('CastillaLaMancha')}
+        onMouseOver={() => onHover("CastillaLaMancha")}
         region="espana/castilla-la-mancha"
         onMouseLeave={() => onLeave()}
       >
@@ -3236,7 +3249,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         id="mur"
         className="region"
         region="espana/murcia"
-        onMouseEnter={() => onHover('Murcia')}
+        onMouseEnter={() => onHover("Murcia")}
         onMouseLeave={() => onLeave()}
       >
         <g>
@@ -3447,7 +3460,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         id="can"
         className="region"
         region="espana/cantabria"
-        onMouseEnter={() => onHover('Cantabria')}
+        onMouseEnter={() => onHover("Cantabria")}
         onMouseLeave={() => onLeave()}
       >
         <path
@@ -3476,7 +3489,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         id="mad"
         className="region"
         region="espana/madrid"
-        onMouseEnter={() => onHover('Madrid')}
+        onMouseEnter={() => onHover("Madrid")}
         onMouseLeave={() => onLeave()}
       >
         <path
@@ -3550,7 +3563,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         id="nav"
         className="region"
         region="espana/navarra"
-        onMouseEnter={() => onHover('Navarra')}
+        onMouseEnter={() => onHover("Navarra")}
         onMouseLeave={() => onLeave()}
       >
         <g>
@@ -3617,7 +3630,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         id="pai"
         className="region"
         region="espana/pais-vasco"
-        onMouseEnter={() => onHover('PaisVasco')}
+        onMouseEnter={() => onHover("PaisVasco")}
         onMouseLeave={() => onLeave()}
       >
         <g>
@@ -3685,7 +3698,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         id="gal"
         className="region"
         region="espana/galicia"
-        onMouseEnter={() => onHover('Galicia')}
+        onMouseEnter={() => onHover("Galicia")}
         onMouseLeave={() => onLeave()}
       >
         <g>
@@ -3843,7 +3856,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         id="bal"
         className="region"
         region="espana/islas-baleares"
-        onMouseEnter={() => onHover('IslasBaleares')}
+        onMouseEnter={() => onHover("IslasBaleares")}
         onMouseLeave={() => onLeave()}
       >
         <path
@@ -3891,7 +3904,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         id="cnr"
         className="region"
         region="espana/islas-canarias"
-        onMouseEnter={() => onHover('IslasCanarias')}
+        onMouseEnter={() => onHover("IslasCanarias")}
         onMouseLeave={() => onLeave()}
       >
         <path

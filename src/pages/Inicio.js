@@ -145,7 +145,16 @@ const Inicio = () => {
     //   isVisible: false
     // }
   ]);
+  //getter setter
+  // get set
+  // 
+
   const [openDrawer, setOpenDrawer] = useState(false);
+
+  // '' => 'Asturias' => 'somethingelse'
+ // setCurrentRegion holds address of setter function
+ // Or a refrenece
+ 
   const [currentRegion, setCurrentRegion] = useState('');
   const classes = useStyles();
 
@@ -213,6 +222,7 @@ const Inicio = () => {
                   src={map.component}
                   onRegionSelected={setCurrentRegion}
                   currentRegion={currentRegion}
+                  toggleMapas={toggleMapas}
                   key={index}
                 />
               );
