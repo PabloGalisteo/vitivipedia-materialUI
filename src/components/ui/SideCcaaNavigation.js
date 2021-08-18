@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import BotonComponent from './botonesCCAA/BotonComponent';
 
@@ -6,8 +6,7 @@ const useStyles = makeStyles(() => ({
   sideBar: {
     display: 'flex',
     flexDirection: 'column',
-    height: '120vh',
-    overflow: 'scroll'
+    overflow: 'auto'
   },
   marginBottomButton: {
     marginBottom: '0.76em',
@@ -19,10 +18,12 @@ const useStyles = makeStyles(() => ({
 const SideCcaaNavigation = ({
   toggleMapas,
   currentRegion,
-  setCurrentRegion
+  setCurrentRegion,
+  mapHeight
 }) => {
   const classes = useStyles();
 
+ 
   const [buttonList] = useState([
     { title: 'España', value: 'Espana', color: '#ee6161' },
     { title: 'Andalucía', value: 'Andalucia', color: '#E84A28' },
@@ -49,7 +50,7 @@ const SideCcaaNavigation = ({
   ]);
 
   return (
-    <div className={classes.sideBar}>
+    <div className={classes.sideBar} style={{ height: mapHeight ? mapHeight : '' }}>
       {buttonList.map(item => (
         <BotonComponent
           marginButtton={classes.marginBottomButton}
