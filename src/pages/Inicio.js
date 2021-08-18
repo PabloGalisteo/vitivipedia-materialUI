@@ -23,7 +23,7 @@ import { ReactComponent as MurciaMapa } from '../mapas/Murcia.svg';
 import { ReactComponent as NavarraMapa } from '../mapas/Navarra.svg';
 import { ReactComponent as PaisVascoMapa } from '../mapas/País Vasco.svg';
 import { ReactComponent as RiojaMapa } from '../mapas/Rioja.svg';
-// import {ReactComponent as ValenciaMapa} from '../mapas/Valencia.svg';
+import ValenciaMapa from '../mapas/Valencia.js';
 
 import SideCcaaNavigation from '../components/ui/SideCcaaNavigation';
 
@@ -49,6 +49,12 @@ const useStyles = makeStyles(theme => ({
   },
   mapContainer: {
     backgroundColor: '#daf7ff'
+  },
+  comunidadesStyleBtn: {
+    backgroundColor: '#f8ac88',
+    '&:hover': {
+      backgroundColor: '#f78550'
+    }
   }
 }));
 
@@ -138,12 +144,12 @@ const Inicio = () => {
       name: 'Rioja',
       component: RiojaMapa,
       isVisible: false
+    },
+    {
+      name: 'Valencia',
+      component: ValenciaMapa,
+      isVisible: false
     }
-    // {
-    //   name: 'Valencia',
-    //   component: ValenciaMapa,
-    //   isVisible: false
-    // }
   ]);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [currentRegion, setCurrentRegion] = useState('');
@@ -195,7 +201,7 @@ const Inicio = () => {
         <Grid item md={10} xs={12}>
           <Button
             variant="contained"
-            className={classes.navigationToggler}
+            className={`${classes.navigationToggler} ${classes.comunidadesStyleBtn}`}
             onClick={() => setOpenDrawer(true)}
           >
             Comunidades
@@ -214,6 +220,7 @@ const Inicio = () => {
                   onRegionSelected={setCurrentRegion}
                   currentRegion={currentRegion}
                   key={index}
+                  toggleMapas={toggleMapas}
                 />
               );
             })}

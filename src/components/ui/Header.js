@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
@@ -137,72 +137,42 @@ export default function Header(props) {
     setOpenMenu(false);
   };
 
-  const menuOptions = [
-    { name: 'Aprende', link: '/aprende' },
-    { name: 'Vino', link: '/vino' },
-    { name: 'Destilados', link: '/destilados' },
-    { name: 'café', link: '/cafe' }
-  ];
+  const [menuOptions] = useState([
+    { name: 'Aprende', link: '/aprende', activeIndex: 1, selectedIndex: 0 },
+    { name: 'Vino', link: '/vino', activeIndex: 1, selectedIndex: 1 },
+    {
+      name: 'Destilados',
+      link: '/destilados',
+      activeIndex: 1,
+      selectedIndex: 2
+    },
+    { name: 'café', link: '/cafe', activeIndex: 1, selectedIndex: 3 }
+  ]);
+
+  const [routes] = useState([
+    { name: 'Inicio', link: '/', activeIndex: 0 },
+    { name: 'Blog', link: '/blog', activeIndex: 1 },
+    { name: 'Sobre', link: '/sobre', activeIndex: 2 },
+    { name: 'Aprende', link: '/aprende', activeIndex: 3 },
+    { name: 'Contacto', link: '/contacto', activeIndex: 4 }
+  ]);
 
   useEffect(() => {
-    if (window.location.pathname === '/' && value !== 0) {
-      setValue(0);
-    } else if (window.location.pathname === '/blog' && value !== 1) {
-      setValue(1);
-    } else if (window.location.pathname === '/sobre' && value !== 2) {
-      setValue(2);
-    } else if (window.location.pathname === '/aprende' && value !== 3) {
-      setValue(3);
-    } else if (window.location.pathname === '/contacto' && value !== 4) {
-      setValue(4);
-    }
-
-    switch (window.location.pathname) {
-      case '/':
-        if (value !== 0) {
-          setValue(0);
-        }
-        break;
-      case '/aprende':
-        if (value !== 3) {
-          setValue(3);
-          setSelectedIndex(0);
-        }
-        break;
-      case '/vino':
-        if (value !== 3) {
-          setValue(1);
-        }
-        break;
-      case '/destilados':
-        if (value !== 3) {
-          setValue(2);
-        }
-        break;
-      case '/café':
-        if (value !== 3) {
-          setValue(3);
-          setSelectedIndex(3);
-        }
-        break;
-      case '/blog':
-        if (value !== 1) {
-          setValue(1);
-        }
-        break;
-      case '/sobre':
-        if (value !== 2) {
-          setValue(2);
-        }
-        break;
-      case '/contacto':
-        if (value !== 4) {
-          setValue(4);
-        }
-        break;
-      default:
-    }
-  }, [value]);
+    [...menuOptions, ...routes].forEach(route => {
+      switch (window.location.pathname) {
+        case `${route.link}`:
+          if (value !== route.activeIndex) {
+            setValue(route.activeIndex);
+            if (route.selectedIndex && route.selectedIndex !== selectedIndex) {
+              setSelectedIndex(route.selectedIndex);
+            }
+          }
+          break;
+        default:
+          break;
+      }
+    });
+  }, [value, menuOptions, selectedIndex, routes]);
 
   const tabs = (
     <React.Fragment>
