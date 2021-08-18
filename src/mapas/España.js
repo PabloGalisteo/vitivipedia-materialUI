@@ -3,17 +3,28 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   highlight: {
-    opacity: 1
+    opacity: 0.45
   }
 }));
 
-const Espana = ({ onRegionSelected, currentRegion }) => {
+const Espana = ({ onRegionSelected, currentRegion, toggleMapas }) => {
   const styleClasses = useStyles();
   const onHover = regionName => {
     onRegionSelected(regionName);
   };
   const onLeave = () => {
     onRegionSelected('');
+  };
+
+  const onRegionClicked = region => {
+    toggleMapas(region);
+  };
+
+  const getRegionClassNames = region => {
+    return [
+      'region',
+      currentRegion === region ? styleClasses.highlight : ''
+    ].join(' ');
   };
   return (
     <svg viewBox="0 0 1190.6 883.3">
@@ -1517,18 +1528,16 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="ast"
-        className={[
-          'region',
-          currentRegion === 'Asturias' ? '' : styleClasses.highlight
-        ].join(' ')}
+        className={getRegionClassNames('Asturias')}
         onMouseEnter={() => onHover('Asturias')}
         onMouseLeave={() => onLeave()}
+        onClick={() => onRegionClicked('Asturias')}
         region="espana/asturias"
       >
         <g>
           <g>
             <path
-              fill="#9A1945"
+              fill="#30cf60"
               d="M437.9,94.7c0.6,0,0.8-0.7,0.6-1.3c-0.2-0.5-0.7-0.9-0.8-1.5s0.1-1.3,0.7-1.2c0.4,0.1,0.7,0.6,1.1,0.7
             c0.4,0,0.7-0.3,0.8-0.7c0.1-0.4,0-0.8,0.1-1.2c0-0.1,0.1-0.2,0.1-0.3c0.1-0.1,0.2-0.1,0.4-0.1c0.5,0,0.9,0,1.4,0
             c-0.2-0.6,0.4-1.1,0.8-1.6c0.7-0.8,0.9-2,0.6-3c-0.1-0.4-0.4-0.9-0.1-1.2c0.4-0.5,1.6-0.1,1.8-0.7c-0.6-1.2-2.6-0.8-3.5-1.7
@@ -1557,14 +1566,15 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="rio"
-        className="region"
         onMouseEnter={() => onHover('Rioja')}
         onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('Rioja')}
+        onClick={() => onRegionClicked('Rioja')}
         region="espana/rioja"
       >
         <g>
           <path
-            fill="#D4F766"
+            fill="#f77c66"
             d="M694.6,148.8c-0.3-0.1-1.6-0.5-2.5,0.1c-0.7,0.4-0.5,1-1.1,1.6c-0.5,0.5-1.1,0.7-2.3,1
           c-1.9,0.5-2.3,0.1-3.4,0.7c-0.5,0.3-1.4,0.7-1.6,1.6c-0.2,0.7,0,1.5,0.5,2c0.6,0.6,1.1,0.3,2,1c0.2,0.2,1.2,0.8,1.4,1.9
           c0.2,1-0.5,1.3-0.3,2.3c0,0.2,0.2,1,0.9,1.5c0.7,0.5,1.5,0.3,1.7,0.2c0.9-0.2,0.9-0.7,1.6-0.8c1-0.1,1.6,0.9,1.9,0.6
@@ -1598,9 +1608,10 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="leo"
-        className="region"
         onMouseEnter={() => onHover('CastillaLeon')}
         onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('CastillaLeon')}
+        onClick={() => onRegionClicked('CastillaLeon')}
         region="espana/castilla-y-leon"
       >
         <g>
@@ -1931,9 +1942,10 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="ext"
-        className="region"
         onMouseEnter={() => onHover('Extremadura')}
         onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('Extremadura')}
+        onClick={() => onRegionClicked('Extremadura')}
         region="espana/extremadura"
       >
         <g>
@@ -2109,10 +2121,11 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="cat"
-        className="region"
         region="espana/cataluna"
         onMouseEnter={() => onHover('Cataluna')}
         onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('Cataluna')}
+        onClick={() => onRegionClicked('Cataluna')}
       >
         <g>
           <path
@@ -2382,10 +2395,11 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="and"
-        className="region"
         region="espana/andalucia"
         onMouseEnter={() => onHover('Andalucia')}
         onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('Andalucia')}
+        onClick={() => onRegionClicked('Andalucia')}
       >
         <path
           fill="#E84A28"
@@ -2690,10 +2704,11 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="ara"
-        className="region"
         region="espana/aragon"
         onMouseEnter={() => onHover('Aragon')}
         onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('Aragon')}
+        onClick={() => onRegionClicked('Aragon')}
       >
         <path
           fill="#F84937"
@@ -2791,9 +2806,10 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="man"
-        className="region"
         onMouseOver={() => onHover('CastillaLaMancha')}
         region="espana/castilla-la-mancha"
+        className={getRegionClassNames('CastillaLaMancha')}
+        onClick={() => onRegionClicked('CastillaLaMancha')}
         onMouseLeave={() => onLeave()}
       >
         <g>
@@ -3234,10 +3250,11 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="mur"
-        className="region"
         region="espana/murcia"
         onMouseEnter={() => onHover('Murcia')}
         onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('Murcia')}
+        onClick={() => onRegionClicked('Murcia')}
       >
         <g>
           <path
@@ -3297,7 +3314,14 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
           ></path>
         </g>
       </g>
-      <g id="val" className="region" region="espana/valencia">
+      <g
+        id="val"
+        onMouseEnter={() => onHover('Valencia')}
+        onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('Valencia')}
+        onClick={() => onRegionClicked('Valencia')}
+        region="espana/valencia"
+      >
         <g>
           <path
             fill="#FFC407"
@@ -3445,14 +3469,15 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="can"
-        className="region"
         region="espana/cantabria"
         onMouseEnter={() => onHover('Cantabria')}
         onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('Cantabria')}
+        onClick={() => onRegionClicked('Cantabria')}
       >
         <path
-          fill="#C6C6C6"
-          stroke="#C6C6C6"
+          fill="#4aa74f"
+          stroke="#4aa74f"
           strokeWidth="4"
           strokeMiterlimit="10"
           d="M594.8,88.6c-1.2,0.9-2.1,3.6-3.3,2.6
@@ -3474,10 +3499,11 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="mad"
-        className="region"
         region="espana/madrid"
         onMouseEnter={() => onHover('Madrid')}
         onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('Madrid')}
+        onClick={() => onRegionClicked('Madrid')}
       >
         <path
           fill="#E0935F"
@@ -3548,10 +3574,11 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="nav"
-        className="region"
         region="espana/navarra"
         onMouseEnter={() => onHover('Navarra')}
         onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('Navarra')}
+        onClick={() => onRegionClicked('Navarra')}
       >
         <g>
           <path
@@ -3615,10 +3642,11 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="pai"
-        className="region"
         region="espana/pais-vasco"
         onMouseEnter={() => onHover('PaisVasco')}
         onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('PaisVasco')}
+        onClick={() => onRegionClicked('PaisVasco')}
       >
         <g>
           <path
@@ -3683,14 +3711,15 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="gal"
-        className="region"
         region="espana/galicia"
         onMouseEnter={() => onHover('Galicia')}
         onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('Galicia')}
+        onClick={() => onRegionClicked('Galicia')}
       >
         <g>
           <path
-            fill="#780014"
+            fill="#ee032a"
             d="M424,158.3c-0.1-0.3-0.2-0.5-0.6-0.9c-0.6-0.6-0.8-0.6-0.9-1c-0.1-0.4,0.1-0.6,0-0.9
           c-0.3-0.5-1.1-0.4-1.1-0.6c-0.1-0.3,1-0.5,1.1-1.1c0-0.4-0.4-0.5-0.5-1.1c0-0.2,0-0.2,0.2-1.1c0.1-0.7,0.1-0.7,0.1-0.8
           c-0.2-0.3-1,0.1-1.7-0.2c-0.7-0.3-0.7-1.1-1.1-1.1c-0.3,0-0.2,0.7-0.7,1c-0.6,0.4-1.1-0.2-1.6,0.1c-0.5,0.3-0.2,0.7-0.7,1.2
@@ -3728,7 +3757,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
           c0.4-1.4,0.4-1.4,0.5-1.6c0.2-0.6,0.4-0.6,0.8-1.5C424,158.7,424.1,158.5,424,158.3z"
           ></path>
           <path
-            fill="#780014"
+            fill="#ee032a"
             d="M374.3,165.9c0.2-0.3,0.3-0.9,0-1.2c-0.1-0.2-0.3-0.2-0.9-0.3c-1.1-0.3-1.2-0.5-1.6-0.4
           c-0.5,0.1-0.6,0.6-1,0.5c-0.3-0.1-0.3-0.4-0.7-0.5c-0.4-0.1-0.6,0.2-0.9,0.1c-0.4-0.1-0.7-0.8-0.5-1.4c0.2-0.8,1-1,0.9-1.4
           c-0.1-0.2-0.3-0.2-0.8-0.5c-0.4-0.4-0.4-0.6-0.7-0.7c-0.4-0.2-0.8,0-1,0.1c-0.4,0.2-0.4,0.3-0.7,0.4c-0.4,0.1-0.8-0.1-0.9-0.2
@@ -3742,7 +3771,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
           C373.2,166.3,374,166.3,374.3,165.9z"
           ></path>
           <path
-            fill="#780014"
+            fill="#ee032a"
             stroke="#D8D6D6"
             strokeMiterlimit="10"
             d="M359.4,178.5c0,0.7-0.3,2.7-0.5,3.2c-0.4,0.9-0.6,1.4-1.2,1.9
@@ -3768,7 +3797,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
           c0.1,0.2,0.2,0.5,0.5,0.9c0.2,0.3,0.5,0.4,0.7,0.6c0.3,0.2,0.8,0.5,1.4,0.7C359,178.5,359.3,178.2,359.4,178.5z"
           ></path>
           <path
-            fill="#780014"
+            fill="#ee032a"
             d="M331.4,159.9c-0.4-0.1-0.9,0.6-0.8,0.9c0,0.1,0.2,0.1,0.2,0.3c0.1,0.1,0,0.3-0.1,0.4
           c-0.1,0.1-0.3,0.1-0.5,0c-0.4-0.1-0.5-0.3-0.8-0.3c-0.1,0-0.5-0.1-0.6,0.1c-0.1,0.1,0,0.3,0,0.7c0,0.5-0.2,0.6-0.1,0.8
           c0.1,0.3,0.6,0.1,1.1,0.5c0.2,0.2,0.3,0.4,0.5,0.6c0.3,0.4,0.2,0.6,0.4,1c0.2,0.3,0.3,0.5,0.5,0.5c0.3,0,0.4-0.5,1-0.8
@@ -3776,7 +3805,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
           c-0.1-0.4-0.1-0.5-0.2-0.9C332,160.6,331.8,160,331.4,159.9z"
           ></path>
           <path
-            fill="#780014"
+            fill="#ee032a"
             d="M325.2,137.4c-0.3,0.7-0.8,1.2-1.9,2.3c-0.5,0.5-1.4,1.3-2.6,2.1c-1,0.7-1.4,0.7-1.8,1.2
           c-0.5,0.8-0.6,1.7-0.6,2.3c0,0.6-0.1,0.9,0.1,1.3c0.2,0.4,0.4,0.6,0.4,0.9c0,0.3-0.3,0.4-0.5,0.7c-0.2,0.3-0.2,0.7-0.2,1.2
           c-0.1,1.2-0.1,1.9-0.2,2.4c-0.2,0.7-0.5,1.1-0.9,1.6c-0.7,1-1.2,1-1.4,1.7c-0.2,0.7-0.1,1.5,0.2,1.6c0.3,0.1,0.6-0.6,1.2-0.6
@@ -3786,7 +3815,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
           c-0.4-0.1-0.6,0-2.9,1.3c-0.6,0.4-1.2,0.8-1.8,1.1c-0.5,0.2-0.8,0.4-1.1,0.7C325.4,136.7,325.3,137.1,325.2,137.4z"
           ></path>
           <path
-            fill="#780014"
+            fill="#ee032a"
             d="M332.5,129.6c0.6-0.1,0.6-0.4,1.1-0.4c0.3,0,0.4,0,1.7,0.6c0.8,0.4,0.9,0.4,1,0.4c0.7-0.2,0.7-1.5,1.2-1.5
           c0.2,0,0.4,0.2,0.7,0.4c0.4,0.4,0.9,0.5,2.5,0.7c2,0.2,3,0.4,3.5,0.3c0.2,0,1-0.2,2.4-0.6c1.9-0.5,2.4-0.7,3-1
           c0.7-0.4,1.2-0.7,1.7-1.3c0.4-0.6,0.5-1.2,0.6-1.8c0.1-0.7,0.2-1.5-0.2-1.8c-0.3-0.2-0.5,0-0.8-0.3c-0.3-0.3-0.3-0.7-0.2-1
@@ -3800,7 +3829,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
           c0.1,0.3,0.6,0.6,0.9,0.5c0.6-0.2,0.6-2,0.6-2c0,0-0.4,1.5,0.3,2.1C331.5,129.8,332.4,129.6,332.5,129.6z"
           ></path>
           <path
-            fill="#780014"
+            fill="#ee032a"
             d="M392.4,211c0.5,1.1,0.4,0.4,1.2,2.2c0.3,0.7,0.4,1.3,1,1.7c0.1,0.1,0.5,0.3,0.9,0.3c0.5-0.1,0.7-0.4,1.2-1
           c0.6-0.7,1.2-1.4,2.1-2c0.8-0.5,1.3-0.5,1.6-0.5c0.2,0,0.5,0.1,0.8,0.3c0.2,0.2,0.3,0.5,0.3,0.7c0.1,0.5,0.6,0.9,1.6,1.8
           c0.1,0.1,0.9,0.8,1.9,1.2c0.2,0.1,0.4,0.2,0.6,0.1c0.3-0.1,0.3-0.6,0.6-0.9c0.3-0.3,0.6-0.5,1-0.6c0.9-0.3,1.4-0.2,2.8-0.2
@@ -3821,7 +3850,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
           c-0.2,0.3,0,0.6,0,1.5C391.6,209.7,392.2,210.7,392.4,211z"
           ></path>
           <path
-            fill="#780014"
+            fill="#ee032a"
             stroke="#E2E0E0"
             strokeMiterlimit="10"
             d="M429.7,153.3c-0.2-0.1-0.6,0-0.9,0.3c-0.3,0.3-0.3,0.6-0.5,1
@@ -3841,13 +3870,14 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="bal"
-        className="region"
         region="espana/islas-baleares"
         onMouseEnter={() => onHover('IslasBaleares')}
         onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('IslasBaleares')}
+        onClick={() => onRegionClicked('IslasBaleares')}
       >
         <path
-          fill="#F7D1BF"
+          fill="#1467c5"
           d="M1185.8,364.7c-1.2-1.3-2.9-2.8-2.6-4.7c0.3-1.9-0.7-1.7-1.7-2.2c-1-0.4-1.2-0.4-4.5-1.9
         c-3.3-1.5-0.4-0.6-2.3-2.5c-1.9-2-4.8-3.1-3.6-1.7c1.2,1.5-0.6,2.6-1.9,2.4c-1.3-0.2-1.5-0.6-3.1,0c-1.6,0.6-2.5,0.4-3.6,0.2
         c-1.2-0.1-2.9-0.4-4.5,0c-1.6,0.4-4.8,1.6-5.5,2.2c-0.7,0.6-1.3,2.3-1.6,3.8c-0.3,1.5,1,0.6,2.5,0.4c1.5-0.1,0.6,1,0.9,3.9
@@ -3855,13 +3885,13 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         c1.6,1.5,3.3,1.2,4.9,2.6c1.6,1.5,2.6,0.6,4.1,0c1.5-0.6,1-3.1,2.2-4.1C1188.5,367.5,1187,366.1,1185.8,364.7z"
         ></path>
         <path
-          fill="#F7D1BF"
+          fill="#1467c5"
           d="M1102.7,436.7c-0.2-0.5-0.1-0.8-0.6-1c-0.4-0.1-1.9,2.5-2.6,3c-0.6,0.6-1.1,0.9-1.4,1.9
         c-0.4,1.1-0.3,2,0.2,2.6c0.5,0.6,0.7,1.6,1.7,1.1c1-0.5,1.7-0.2,2-1.1c0.4-0.9,0.3-1.4,0.2-2.6c-0.1-1.2-0.4-0.8,0-2
         C1102.7,437.4,1103,437.3,1102.7,436.7z"
         ></path>
         <path
-          fill="#F7D1BF"
+          fill="#1467c5"
           d="M1108.6,382.5c-0.4,0.2-1.6,2.4-2.1,2.6c-0.6,0.3-1.6-0.4-1.8-0.5c-0.9-0.6-1-1.2-1.3-1.2
         c-0.5,0-0.6,0.9-1.2,2.1c-0.8,1.5-1,2-1.5,2.1c-0.4,0.1-0.8-0.2-1,0c-0.2,0.2,0,0.7,0,0.8c0.2,0.7,0.7,1,1.5,1.6
         c1.1,0.8,1.6,1.2,1.7,1.4c0.6,1.3-0.9,3.5-2,3.5c-0.2,0-0.2-0.1-1-0.8c-1.2-0.9-1.2-0.6-2.2-1.3c-0.2-0.2-0.4-0.3-0.5-0.3
@@ -3879,7 +3909,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         c-0.8,0.8-1.7,1.5-2.7,1.9c-0.8,0.3-1.4,0.3-3.2-0.3c-1.4-0.5-0.5-0.3-4-2.1C1109.5,383.3,1109.1,382.3,1108.6,382.5z"
         ></path>
         <path
-          fill="#F7D1BF"
+          fill="#1467c5"
           d="M1086.7,391.4c-0.5,0.4-0.2,1-0.9,2.1c-0.3,0.4-0.5,0.8-0.9,0.9c-0.9,0.3-1.9-0.8-2-0.9
         c-0.9-0.9-0.8-1.9-1.3-2c-0.5-0.1-1,0.5-1.3,0.9c-0.7,1.2-0.1,2.6,0.1,3.2c0.8,2.1,1.8,2,5.5,5.6c0.9,0.9,2.1,2.2,2.9,1.8
         c0.2-0.1,0.2-0.2,0.6-0.6c0.6-0.6,1.2-0.8,1.8-1c0.7-0.3,0.8-0.2,2.4-0.6c1-0.3,1.3-0.4,1.5-0.6c0.3-0.3,0.9-1,0.7-1.6
@@ -3889,13 +3919,14 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
       </g>
       <g
         id="cnr"
-        className="region"
         region="espana/islas-canarias"
         onMouseEnter={() => onHover('IslasCanarias')}
         onMouseLeave={() => onLeave()}
+        className={getRegionClassNames('IslasCanarias')}
+        onClick={() => onRegionClicked('IslasCanarias')}
       >
         <path
-          fill="#F7D1BF"
+          fill="#f8ac88"
           d="M56.7,739.2c1.6,0.5,1.7,1.4,2.9,1.8c1,0.3,1.9,0.1,2.3,0c1.5-0.3,1.7-1.1,2.8-1.1c1,0,1.7,0.8,2,1
         c0.8,0.8,0.6,1.4,1.3,3.5c0.5,1.6,1.3,3.4,1.5,3.7c0.6,1.3,0.8,1.5,0.7,2c-0.1,1.1-0.9,1.3-2,3.1c-0.5,0.9-0.9,1.6-1,2.6
         c-0.1,1.5,0.8,1.7,1,3.4c0.1,0.6-0.1,1.6-0.5,3.5c-0.4,2.2-0.7,2.7-0.9,2.9c-0.6,1-1,0.8-1.6,1.8c-0.7,1.2-0.3,1.7-1,2.8
@@ -3905,7 +3936,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         C55.6,739,56,738.9,56.7,739.2z"
         ></path>
         <path
-          fill="#F7D1BF"
+          fill="#f8ac88"
           d="M190,764.7c-1.8,0.2-3.5,1-3.4,1.3c0.1,0.2-3.2-0.1-3.2-0.1c-1.6-0.2-1.7-0.2-2.1-0.1
         c-1.4,0.2-2,0.9-2.7,0.6c-0.6-0.3-0.7-1-1-1c-0.4,0.1-0.1,1.2-0.7,1.8c-0.5,0.5-1,0.2-2.9,0.5c-0.8,0.1-1.3,0.2-1.7,0.5
         c-1,0.6-1.5,1.5-1.6,1.8c-0.6,1.4,0,1.9-0.6,2.7c-0.7,0.9-1.7,0.5-2.2,1.3c-0.3,0.7,0.1,1.2-0.4,1.6c-0.4,0.4-1.1,0-1.5,0.4
@@ -3922,14 +3953,14 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         c0.3-0.9-0.7-2.2-2-2.7C191.5,764.5,190.9,764.6,190,764.7z"
         ></path>
         <path
-          fill="#F7D1BF"
+          fill="#f8ac88"
           d="M106.8,797.4c-0.7-0.4-0.6-1.1-1.4-1.5c-0.1-0.1-0.5-0.2-1.7,0c-1.6,0.3-2.5,0.4-3,1.2
         c-0.6,0.9,0.1,1.5-0.5,2.7c-0.6,1-1.3,0.9-1.6,1.8c-0.1,0.5,0.1,0.7,0,1.6c-0.1,0.8-0.3,1.1-0.4,1.6c-0.1,0.9,0.5,1.7,1.8,3.4
         c2.7,3.4,2.6,3.4,2.9,3.6c0.6,0.4,2.3,1.6,4.7,1.6c1.1,0,1.9-0.3,2.7-0.6c1-0.4,1.2-0.7,4-2.4c1.6-1,1.7-1,2-1.4
         c1.2-1.4,1.1-3.3,1.1-3.6c0-0.2-0.2-2.3-1.8-3.6c-1.3-1-2-0.4-3.2-1.4c-1.5-1.2-1-2.5-2.2-3C108.9,796.9,107.9,798.1,106.8,797.4z"
         ></path>
         <path
-          fill="#F7D1BF"
+          fill="#f8ac88"
           d="M247.6,801.2c-0.8,0.2-1.7,0.4-1.7,0.9c0,0.3,0.4,0.4,0.6,1c0.2,0.6-0.1,1.1-0.1,1.2
         c-0.3,0.7-1.1,1.2-1.8,1.1c-0.4,0-0.5-0.2-1.6-0.7c-1-0.5-0.9-0.4-1.8-0.8c-1.4-0.7-1.4-1-1.9-0.9c-0.5,0.1-0.6,0.4-1.6,0.8
         c-0.4,0.1-0.7,0.2-0.9,0.2c-1.4,0.3-3,0.5-4-0.2c-0.9-0.7-0.8-2.1-1.5-2.2c-0.3,0-0.3,0.2-1.1,0.3c-0.5,0.1-0.5,0-0.8,0.1
@@ -3949,7 +3980,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         C248.6,800.9,248.3,801,247.6,801.2z"
         ></path>
         <path
-          fill="#F7D1BF"
+          fill="#f8ac88"
           d="M52.3,827c-0.5,0.2-0.6,0.7-1.2,0.7c-0.5,0-0.7-0.4-1-0.4c-0.5,0.1-0.3,0.8-0.9,1.3
         c-0.6,0.5-1.4,0.1-1.6,0.5c-0.2,0.3,0.3,0.6,0.3,1.3c0,0.1,0,0.9-0.5,1.3c-0.5,0.4-1.1,0-1.6,0.5c-0.4,0.3-0.2,0.6-0.6,1.1
         c-0.2,0.3-0.5,0.4-2.2,1c-0.8,0.3-1.1,0.4-1.2,0.4c-0.9,0.1-1.2-0.3-2.5-0.4c-0.7,0-0.7,0.1-1-0.1c-0.8-0.3-0.8-1.3-1.2-1.3
@@ -3961,7 +3992,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         C53.8,827.3,53,826.8,52.3,827z"
         ></path>
         <path
-          fill="#F7D1BF"
+          fill="#f8ac88"
           d="M397.9,708.5c-0.2-0.3,0-0.6-0.2-0.8c-0.2-0.2-0.5-0.2-0.7-0.1c-0.3,0.1-0.3,0.4-0.5,0.7
         c-0.2,0.3-0.4,0.5-0.9,1c-0.7,0.7-0.9,0.6-1.2,1c-0.1,0.2-0.1,0.3-0.4,1.3c-0.4,1.5-0.4,1.7-0.5,1.8c-0.4,0.5-1,0.5-1.1,0.9
         c-0.1,0.3,0.2,0.4,0.3,0.9c0.1,0.5-0.1,0.8-0.5,1.5c-0.5,1-0.8,1.5-1.2,1.6c-0.5,0-0.5-0.6-1.5-1.1c-0.7-0.4-1.3-0.4-1.6-0.4
@@ -3980,7 +4011,7 @@ const Espana = ({ onRegionSelected, currentRegion }) => {
         C398.6,708.8,398.1,708.9,397.9,708.5z"
         ></path>
         <path
-          fill="#F7D1BF"
+          fill="#f8ac88"
           d="M396.6,704.2c-0.4-0.2-0.5,0.1-0.9,0c-0.7-0.2-0.7-1.2-1.1-1.2c-0.2,0-0.3,0.4-0.4,0.5
         c-0.1,0.4,0,0.5,0,0.8c-0.1,0.4-0.3,0.4-0.5,0.7c-0.3,0.6,0.2,1.2,0,1.5c-0.2,0.2-0.5,0-0.7,0.2c-0.1,0.2,0,0.3,0,0.7
         c0,0.1-0.1,0.5-0.4,0.8c-0.3,0.2-0.6,0-0.8,0.2c-0.2,0.2-0.1,0.6,0,0.9c0.3,0.6,1.1,0.6,1.1,0.6c0,0,0.5,0,0.9-0.4

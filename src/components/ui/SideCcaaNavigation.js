@@ -5,7 +5,9 @@ import BotonComponent from './botonesCCAA/BotonComponent';
 const useStyles = makeStyles(() => ({
   sideBar: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    height: '120vh',
+    overflow: 'scroll'
   },
   marginBottomButton: {
     marginBottom: '0.76em',
@@ -22,23 +24,28 @@ const SideCcaaNavigation = ({
   const classes = useStyles();
 
   const [buttonList] = useState([
-    { title: 'España', value: 'Espana', color: '#ccc' },
-    { title: 'Andalucía', value: 'Andalucia', color: '#ccc' },
-    { title: 'Aragón', value: 'Aragon', color: '#ccc' },
-    { title: 'Asturias', value: 'Asturias', color: '#ccc' },
-    { title: 'Cantabria', value: 'Cantabria', color: '#ccc' },
-    { title: 'Castilla la Mancha', value: 'CastillaLaMancha', color: '#ccc' },
-    { title: 'Castilla y León', value: 'CastillaLeon', color: '#ccc' },
-    { title: 'Cataluña', value: 'Cataluna', color: '#ccc' },
-    { title: 'Extremadura', value: 'Extremadura', color: '#ccc' },
-    { title: 'Galcia', value: 'Galicia', color: '#ccc' },
-    { title: 'Islas Baleares', value: 'IslasBaleares', color: '#ccc' },
-    { title: 'Islas Canarias', value: 'IslasCanarias', color: '#a01717' },
-    { title: 'Madrid', value: 'Madrid', color: '#ccc' },
-    { title: 'Murcia', value: 'Murcia', color: '#ccc' },
-    { title: 'Navarra', value: 'Navarra', color: '#ccc' },
-    { title: 'País Vasco', value: 'PaisVasco', color: '#ccc' },
-    { title: 'La Rioja', value: 'Rioja', color: '#ccc' }
+    { title: 'España', value: 'Espana', color: '#ee6161' },
+    { title: 'Andalucía', value: 'Andalucia', color: '#E84A28' },
+    { title: 'Aragón', value: 'Aragon', color: '#F84937' },
+    { title: 'Asturias', value: 'Asturias', color: '#30cf60' },
+    { title: 'Cantabria', value: 'Cantabria', color: '#4aa74f' },
+    {
+      title: 'Castilla la Mancha',
+      value: 'CastillaLaMancha',
+      color: '#EC6C16'
+    },
+    { title: 'Castilla y León', value: 'CastillaLeon', color: '#9A2526' },
+    { title: 'Cataluña', value: 'Cataluna', color: '#810E47' },
+    { title: 'Extremadura', value: 'Extremadura', color: '#C61922' },
+    { title: 'Galicia', value: 'Galicia', color: '#ee032a' },
+    { title: 'Islas Baleares', value: 'IslasBaleares', color: '#1467c5' },
+    { title: 'Islas Canarias', value: 'IslasCanarias', color: '#f8ac88' },
+    { title: 'Madrid', value: 'Madrid', color: '#E0935F' },
+    { title: 'Murcia', value: 'Murcia', color: '#FF9F1D' },
+    { title: 'Navarra', value: 'Navarra', color: '#F9DA3B' },
+    { title: 'País Vasco', value: 'PaisVasco', color: '#F4A679' },
+    { title: 'La Rioja', value: 'Rioja', color: '#f77c66' },
+    { title: 'Valencia', value: 'Valencia', color: '#FFC407' }
   ]);
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -23,7 +23,7 @@ import { ReactComponent as MurciaMapa } from '../mapas/Murcia.svg';
 import { ReactComponent as NavarraMapa } from '../mapas/Navarra.svg';
 import { ReactComponent as PaisVascoMapa } from '../mapas/País Vasco.svg';
 import { ReactComponent as RiojaMapa } from '../mapas/Rioja.svg';
-// import {ReactComponent as ValenciaMapa} from '../mapas/Valencia.svg';
+import ValenciaMapa from '../mapas/Valencia.js';
 
 import SideCcaaNavigation from '../components/ui/SideCcaaNavigation';
 
@@ -49,6 +49,12 @@ const useStyles = makeStyles(theme => ({
   },
   mapContainer: {
     backgroundColor: '#daf7ff'
+  },
+  comunidadesStyleBtn: {
+    backgroundColor: '#f8ac88',
+    '&:hover': {
+      backgroundColor: '#f78550'
+    }
   }
 }));
 
@@ -138,16 +144,18 @@ const Inicio = () => {
       name: 'Rioja',
       component: RiojaMapa,
       isVisible: false
+    },
+    {
+      name: 'Valencia',
+      component: ValenciaMapa,
+      isVisible: false
     }
-    // {
-    //   name: 'Valencia',
-    //   component: ValenciaMapa,
-    //   isVisible: false
-    // }
   ]);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [currentRegion, setCurrentRegion] = useState('');
+  const [mapHeight, setMapHeight] = useState(null);
   const classes = useStyles();
+  const mapRef = useRef();
 
   const toggleMapas = mapName => {
     const updatedMapsList = [...mapsList];
@@ -163,6 +171,16 @@ const Inicio = () => {
     setOpenDrawer(false);
   };
 
+  useEffect(() => {
+    // when registerd, it will listen for reseize continously
+    window.addEventListener('resize', () => {
+      if(mapRef.current) {
+        const height = mapRef.current.clientHeight;
+        setMapHeight(height);
+      }
+    });
+  }, []);
+
   return (
     <div>
       <Grid container>
@@ -176,6 +194,7 @@ const Inicio = () => {
             toggleMapas={toggleMapas}
             currentRegion={currentRegion}
             setCurrentRegion={setCurrentRegion}
+            mapHeight={mapHeight}
           />
         </SwipeableDrawer>
         <Grid
@@ -190,18 +209,19 @@ const Inicio = () => {
             toggleMapas={toggleMapas}
             currentRegion={currentRegion}
             setCurrentRegion={setCurrentRegion}
+            mapHeight={mapHeight}
           />
         </Grid>
         <Grid item md={10} xs={12}>
           <Button
             variant="contained"
-            className={classes.navigationToggler}
+            className={`${classes.navigationToggler} ${classes.comunidadesStyleBtn}`}
             onClick={() => setOpenDrawer(true)}
           >
             Comunidades
           </Button>
-
-          <Box color="text.primary" className={classes.mapContainer}>
+           
+          <Box ref={mapRef} color="text.primary" className={classes.mapContainer}>
             {mapsList.map((map, index) => {
               if (!map.isVisible) {
                 return null;
@@ -209,11 +229,13 @@ const Inicio = () => {
 
               return (
                 <map.component
+                  
                   className={classes.width}
                   src={map.component}
                   onRegionSelected={setCurrentRegion}
                   currentRegion={currentRegion}
                   key={index}
+                  toggleMapas={toggleMapas}
                 />
               );
             })}

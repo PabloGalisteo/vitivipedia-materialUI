@@ -1,5 +1,12 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+
+const styles = makeStyles(() => ({
+  buttonRoot: {
+    height: '2.4em'
+  }
+}));
 
 const BotonComponent = ({
   onClick,
@@ -10,9 +17,10 @@ const BotonComponent = ({
   hoverButtonList,
   value
 }) => {
-  console.log(buttonColor);
+  const classes = styles();
   return (
     <Button
+      classes={{ root: classes.buttonRoot }}
       onClick={onClick}
       className={marginButtton}
       variant="contained"
@@ -20,7 +28,7 @@ const BotonComponent = ({
       onMouseLeave={() => hoverButtonList('')}
       style={{
         backgroundColor: `${buttonColor}`,
-        opacity: isActive ? 1 : 0.7
+        opacity: isActive ? 0.7 : 1
       }}
     >
       {title}
