@@ -11,7 +11,8 @@ const useStyles = makeStyles(() => ({
   marginBottomButton: {
     marginBottom: '0.76em',
     marginLeft: '1.7em',
-    marginRight: '1.2em'
+    marginRight: '1.2em',
+    height: '3em'
   }
 }));
 
@@ -50,9 +51,13 @@ const SideCcaaNavigation = ({
   ]);
 
   return (
-    <div className={classes.sideBar} style={{ height: mapHeight ? mapHeight : '' }}>
-      {buttonList.map(item => (
+    <div
+      className={classes.sideBar}
+      style={{ height: mapHeight ? mapHeight : '' }}
+    >
+      {buttonList.map((item, index) => (
         <BotonComponent
+          key={index + item.value}
           marginButtton={classes.marginBottomButton}
           onClick={() => toggleMapas(item.value)}
           isActive={currentRegion === item.value ? true : false}

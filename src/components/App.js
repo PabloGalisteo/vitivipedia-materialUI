@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
@@ -7,12 +7,17 @@ import theme from './ui/Theme';
 import Header from '../components/ui/Header';
 
 function App() {
+  const [isLogoClicked, setIsLogoClicked] = useState(false);
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Header />
+        <Header setIsLogoClicked={setIsLogoClicked} />
         <Switch>
-          <Route exact path="/" component={() => <Inicio />} />
+          <Route
+            exact
+            path="/"
+            component={() => <Inicio isLogoClicked={isLogoClicked} setIsLogoClicked={setIsLogoClicked} />}
+          />
           <Route exact path="/blog" component={() => <div>Blog</div>} />
           <Route exact path="/sobre" component={() => <div>Sobre</div>} />
           <Route exact path="/aprende" component={() => <div>Aprende</div>} />

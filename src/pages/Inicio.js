@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Inicio = () => {
+const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
   const [mapsList, toogleMapsList] = useState([
     {
       name: 'Espana',
@@ -171,13 +171,35 @@ const Inicio = () => {
     setOpenDrawer(false);
   };
 
+  const toggleM = toggleMapas;
+  
   useEffect(() => {
-    // when registerd, it will listen for reseize continously
-    window.addEventListener('resize', () => {
-      if(mapRef.current) {
+    if(isLogoClicked) {
+      toggleM('Espana');
+      setIsLogoClicked(false);
+    }
+  }, [isLogoClicked, setIsLogoClicked, toggleM] )
+
+
+
+  useEffect(() => {
+    const resize = () => {
+      if (window.outerWidth < 960) {
+        setMapHeight(null);
+        return;
+      }
+      if (mapRef.current) {
         const height = mapRef.current.clientHeight;
         setMapHeight(height);
       }
+    }
+
+    
+
+    resize();
+    // when registerd, it will listen for reseize continously
+    window.addEventListener('resize', () => {
+     resize();
     });
   }, []);
 
@@ -220,24 +242,38 @@ const Inicio = () => {
           >
             Comunidades
           </Button>
-           
-          <Box ref={mapRef} color="text.primary" className={classes.mapContainer}>
+
+          <Box
+            color="text.primary"
+            className={classes.mapContainer}
+            ref={mapRef}
+          >
             {mapsList.map((map, index) => {
               if (!map.isVisible) {
                 return null;
               }
 
+              if(map.component === EspanaMapa) {
+                return (
+                  <map.component
+                    className={classes.width}
+                    src={map.component}
+                    onRegionSelected={setCurrentRegion}
+                    currentRegion={currentRegion}
+                    key={index}
+                    toggleMapas={toggleMapas}
+                  />
+                );
+              }
+
               return (
                 <map.component
-                  
                   className={classes.width}
                   src={map.component}
-                  onRegionSelected={setCurrentRegion}
-                  currentRegion={currentRegion}
                   key={index}
-                  toggleMapas={toggleMapas}
                 />
               );
+             
             })}
           </Box>
         </Grid>

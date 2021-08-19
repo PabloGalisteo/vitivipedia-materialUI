@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
@@ -108,6 +108,7 @@ const useStyles = makeStyles(theme => ({
 export default function Header(props) {
   const classes = useStyles();
   const theme = useTheme();
+  const { setIsLogoClicked } = props;
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const matches = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -121,10 +122,10 @@ export default function Header(props) {
     setValue(newValue);
   };
 
-  const handleClick = e => {
-    setAnchorEl(e.currentTarget);
-    setOpenMenu(true);
-  };
+  // const handleClick = e => {
+  //   setAnchorEl(e.currentTarget);
+  //   setOpenMenu(true);
+  // };
 
   const handleMenuItemClick = (e, i) => {
     setAnchorEl(null);
@@ -153,8 +154,8 @@ export default function Header(props) {
     { name: 'Inicio', link: '/', activeIndex: 0 },
     { name: 'Blog', link: '/blog', activeIndex: 1 },
     { name: 'Sobre', link: '/sobre', activeIndex: 2 },
-    { name: 'Aprende', link: '/aprende', activeIndex: 3 },
-    { name: 'Contacto', link: '/contacto', activeIndex: 4 }
+    // { name: 'Aprende', link: '/aprende', activeIndex: 3 },
+    { name: 'Contacto', link: '/contacto', activeIndex: 3 }
   ]);
 
   useEffect(() => {
@@ -189,7 +190,7 @@ export default function Header(props) {
           to="/sobre"
           label="Sobre"
         />
-        <Tab
+        {/* <Tab
           aria-owns={anchorEl ? 'simple-menu' : undefined}
           aria-haspopup={anchorEl ? 'true' : undefined}
           className={classes.tab}
@@ -197,7 +198,7 @@ export default function Header(props) {
           onMouseOver={event => handleClick(event)}
           to="/aprende"
           label="Aprende"
-        />
+        /> */}
         <Tab
           className={classes.tab}
           component={Link}
@@ -312,7 +313,7 @@ export default function Header(props) {
               Sobre
             </ListItemText>
           </ListItem>
-          <ListItem
+          {/* <ListItem
             onClick={() => {
               setOpenDrawer(false);
               setValue(3);
@@ -333,7 +334,7 @@ export default function Header(props) {
             >
               Aprende
             </ListItemText>
-          </ListItem>
+          </ListItem> */}
           <ListItem
             onClick={() => {
               setOpenDrawer(false);
@@ -377,7 +378,9 @@ export default function Header(props) {
               component={Link}
               to="/"
               disableRipple
-              onClick={() => setValue(0)}
+              onClick={() =>
+                value === 0 ? setIsLogoClicked(true) : setValue(0)
+              }
               className={classes.logoContainer}
             >
               <img className={classes.logo} alt="vitivipedia logo" src={logo} />
