@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
@@ -108,6 +108,7 @@ const useStyles = makeStyles(theme => ({
 export default function Header(props) {
   const classes = useStyles();
   const theme = useTheme();
+  const { setCurrentMap } = props;
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const matches = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -377,7 +378,9 @@ export default function Header(props) {
               component={Link}
               to="/"
               disableRipple
-              onClick={() => setValue(0)}
+              onClick={() =>
+                value === 0 ? setCurrentMap('Espana') : setValue(0)
+              }
               className={classes.logoContainer}
             >
               <img className={classes.logo} alt="vitivipedia logo" src={logo} />

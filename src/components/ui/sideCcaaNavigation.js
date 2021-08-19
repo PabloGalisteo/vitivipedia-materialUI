@@ -12,14 +12,16 @@ const useStyles = makeStyles(() => ({
   marginBottomButton: {
     marginBottom: '0.76em',
     marginLeft: '1.7em',
-    marginRight: '1.2em'
+    marginRight: '1.2em',
+    height: '3em'
   }
 }));
 
 const SideCcaaNavigation = ({
   toggleMapas,
   currentRegion,
-  setCurrentRegion
+  setCurrentRegion,
+  mapHeight
 }) => {
   const classes = useStyles();
 
@@ -49,7 +51,10 @@ const SideCcaaNavigation = ({
   ]);
 
   return (
-    <div className={classes.sideBar}>
+    <div
+      className={classes.sideBar}
+      style={{ height: mapHeight ? mapHeight : '' }}
+    >
       {buttonList.map(item => (
         <BotonComponent
           marginButtton={classes.marginBottomButton}

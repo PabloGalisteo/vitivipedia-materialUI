@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Inicio = () => {
+const Inicio = ({ currentMap }) => {
   const [mapsList, toogleMapsList] = useState([
     {
       name: 'Espana',
@@ -153,7 +153,9 @@ const Inicio = () => {
   ]);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [currentRegion, setCurrentRegion] = useState('');
+  const [mapHeight, setMapHeight] = useState(null);
   const classes = useStyles();
+  const mapRef = useRef();
 
   const toggleMapas = mapName => {
     const updatedMapsList = [...mapsList];
@@ -169,6 +171,26 @@ const Inicio = () => {
     setOpenDrawer(false);
   };
 
+  useEffect(() => {
+    if (currentRegion !== 'Espana') {
+      toggleMapas(currentMap);
+    }
+  }, [currentMap]);
+
+  useEffect(() => {
+    // when registerd, it will listen for reseize continously
+    window.addEventListener('resize', () => {
+      if (window.outerWidth < 960) {
+        setMapHeight(null);
+        return;
+      }
+      if (mapRef.current) {
+        const height = mapRef.current.clientHeight;
+        setMapHeight(height);
+      }
+    });
+  }, []);
+
   return (
     <div>
       <Grid container>
@@ -182,6 +204,7 @@ const Inicio = () => {
             toggleMapas={toggleMapas}
             currentRegion={currentRegion}
             setCurrentRegion={setCurrentRegion}
+            mapHeight={mapHeight}
           />
         </SwipeableDrawer>
         <Grid
@@ -196,6 +219,7 @@ const Inicio = () => {
             toggleMapas={toggleMapas}
             currentRegion={currentRegion}
             setCurrentRegion={setCurrentRegion}
+            mapHeight={mapHeight}
           />
         </Grid>
         <Grid item md={10} xs={12}>
@@ -207,7 +231,11 @@ const Inicio = () => {
             Comunidades
           </Button>
 
-          <Box color="text.primary" className={classes.mapContainer}>
+          <Box
+            color="text.primary"
+            className={classes.mapContainer}
+            ref={mapRef}
+          >
             {mapsList.map((map, index) => {
               if (!map.isVisible) {
                 return null;
