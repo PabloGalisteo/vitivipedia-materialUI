@@ -28,6 +28,16 @@ import ValenciaMapa from '../mapas/Valencia.js';
 import SideCcaaNavigation from '../components/ui/SideCcaaNavigation';
 
 const useStyles = makeStyles(theme => ({
+  toolbarMargin: {
+    ...theme.mixins.toolbar,
+    marginBottom: '3em',
+    [theme.breakpoints.down('md')]: {
+      marginBottom: '2em'
+    },
+    [theme.breakpoints.down('xs')]: {
+      marginBottom: '1.25em'
+    }
+  },
   width: {
     width: '100%'
   },
@@ -55,6 +65,9 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       backgroundColor: '#f78550'
     }
+  },
+  mapBorderRadius: {
+    borderRadius: '3em'
   }
 }));
 
@@ -181,8 +194,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
   }, [isLogoClicked, setIsLogoClicked, toggleM]);
 
   useEffect(() => {
-    // when registerd, it will listen for reseize continously
-    window.addEventListener('resize', () => {
+    const resize = () => {
       if (window.outerWidth < 960) {
         setMapHeight(null);
         return;
@@ -191,6 +203,11 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
         const height = mapRef.current.clientHeight;
         setMapHeight(height);
       }
+    };
+
+    resize();
+    window.addEventListener('resize', () => {
+      resize();
     });
   }, []);
 
@@ -203,6 +220,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
           onOpen={() => setOpenDrawer(true)}
           classes={{ paper: classes.drawer }}
         >
+          <div className={classes.toolbarMargin} />
           <SideCcaaNavigation
             toggleMapas={toggleMapas}
             currentRegion={currentRegion}
@@ -236,7 +254,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
 
           <Box
             color="text.primary"
-            className={classes.mapContainer}
+            className={`${classes.mapContainer} ${classes.mapBorderRadius}`}
             ref={mapRef}
           >
             {mapsList.map((map, index) => {

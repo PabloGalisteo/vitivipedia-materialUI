@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   highlight: {
-    opacity: 0.45
+    opacity: 0.45,
+    borderRadius: '1em'
   }
 }));
 
