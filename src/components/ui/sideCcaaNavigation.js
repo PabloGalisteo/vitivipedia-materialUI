@@ -55,8 +55,9 @@ const SideCcaaNavigation = ({
       className={classes.sideBar}
       style={{ height: mapHeight ? mapHeight : '' }}
     >
-      {buttonList.map(item => (
+      {buttonList.map((item, index) => (
         <BotonComponent
+          key={index + item.value}
           marginButtton={classes.marginBottomButton}
           onClick={() => toggleMapas(item.value)}
           isActive={currentRegion === item.value ? true : false}

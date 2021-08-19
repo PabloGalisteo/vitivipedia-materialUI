@@ -7,16 +7,21 @@ import theme from './ui/Theme';
 import Header from '../components/ui/Header';
 
 function App() {
-  const [currentMap, setCurrentMap] = useState('Espana');
+  const [isLogoClicked, setIsLogoClicked] = useState(false);
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Header setCurrentMap={setCurrentMap} />
+        <Header setIsLogoClicked={setIsLogoClicked} />
         <Switch>
           <Route
             exact
             path="/"
-            component={() => <Inicio currentMap={currentMap} />}
+            component={() => (
+              <Inicio
+                setIsLogoClicked={setIsLogoClicked}
+                isLogoClicked={isLogoClicked}
+              />
+            )}
           />
           <Route exact path="/blog" component={() => <div>Blog</div>} />
           <Route exact path="/sobre" component={() => <div>Sobre</div>} />

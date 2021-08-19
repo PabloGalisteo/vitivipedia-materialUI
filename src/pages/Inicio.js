@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Inicio = ({ currentMap }) => {
+const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
   const [mapsList, toogleMapsList] = useState([
     {
       name: 'Espana',
@@ -171,11 +171,14 @@ const Inicio = ({ currentMap }) => {
     setOpenDrawer(false);
   };
 
+  const toggleM = toggleMapas;
+
   useEffect(() => {
-    if (currentRegion !== 'Espana') {
-      toggleMapas(currentMap);
+    if (isLogoClicked) {
+      toggleMapas('Espana');
+      setIsLogoClicked(false);
     }
-  }, [currentMap]);
+  }, [isLogoClicked, setIsLogoClicked, toggleM]);
 
   useEffect(() => {
     // when registerd, it will listen for reseize continously
@@ -241,14 +244,25 @@ const Inicio = ({ currentMap }) => {
                 return null;
               }
 
+              //'Doble' return 'cos Espana map is the only one getting those props
+              if (map.component === EspanaMapa) {
+                return (
+                  <map.component
+                    className={classes.width}
+                    src={map.component}
+                    onRegionSelected={setCurrentRegion}
+                    currentRegion={currentRegion}
+                    key={index}
+                    toggleMapas={toggleMapas}
+                  />
+                );
+              }
+
               return (
                 <map.component
                   className={classes.width}
                   src={map.component}
-                  onRegionSelected={setCurrentRegion}
-                  currentRegion={currentRegion}
                   key={index}
-                  toggleMapas={toggleMapas}
                 />
               );
             })}
