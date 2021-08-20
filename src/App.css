@@ -4,6 +4,7 @@
 
 body {
   background-color: #545454;
+  margin: 0;
 }
 
 .region {
@@ -12,6 +13,12 @@ body {
 }
 .region:hover {
   opacity: 0.45;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .st0 {

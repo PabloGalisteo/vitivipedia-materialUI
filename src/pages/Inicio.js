@@ -58,16 +58,22 @@ const useStyles = makeStyles(theme => ({
     }
   },
   mapContainer: {
-    backgroundColor: '#daf7ff'
+    backgroundColor: '#daf7ff',
+    margin: '0.5em'
   },
   comunidadesStyleBtn: {
     backgroundColor: '#f8ac88',
+    margin: '0.5em',
     '&:hover': {
       backgroundColor: '#f78550'
     }
   },
   mapBorderRadius: {
-    borderRadius: '3em'
+    borderRadius: '1em',
+    overflow: 'hidden'
+  },
+  mapRoot: {
+    flex: 1
   }
 }));
 
@@ -188,7 +194,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
 
   useEffect(() => {
     if (isLogoClicked) {
-      toggleMapas('Espana');
+      toggleM('Espana');
       setIsLogoClicked(false);
     }
   }, [isLogoClicked, setIsLogoClicked, toggleM]);
@@ -212,7 +218,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
   }, []);
 
   return (
-    <div>
+    <div className={classes.mapRoot}>
       <Grid container>
         <SwipeableDrawer
           open={openDrawer}
@@ -244,14 +250,6 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
           />
         </Grid>
         <Grid item md={10} xs={12}>
-          <Button
-            variant="contained"
-            className={`${classes.navigationToggler} ${classes.comunidadesStyleBtn}`}
-            onClick={() => setOpenDrawer(true)}
-          >
-            Comunidades
-          </Button>
-
           <Box
             color="text.primary"
             className={`${classes.mapContainer} ${classes.mapBorderRadius}`}
@@ -285,6 +283,13 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
               );
             })}
           </Box>
+          <Button
+            variant="contained"
+            className={`${classes.navigationToggler} ${classes.comunidadesStyleBtn}`}
+            onClick={() => setOpenDrawer(true)}
+          >
+            Comunidades
+          </Button>
         </Grid>
       </Grid>
     </div>
