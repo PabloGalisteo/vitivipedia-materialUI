@@ -6,13 +6,23 @@ import Inicio from '../pages/Inicio';
 import theme from './ui/Theme';
 import Header from '../components/ui/Header';
 import Footer from '../components/ui/Footer';
+import Blog from '../pages/Blog';
 
 function App() {
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [value, setValue] = useState(0);
+
   const [isLogoClicked, setIsLogoClicked] = useState(false);
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Header setIsLogoClicked={setIsLogoClicked} />
+        <Header
+          value={value}
+          setValue={setValue}
+          selectedIndex={selectedIndex}
+          setSelectedIndex={setSelectedIndex}
+          setIsLogoClicked={setIsLogoClicked}
+        />
         <Switch>
           <Route
             exact
@@ -24,12 +34,18 @@ function App() {
               />
             )}
           />
-          <Route exact path="/blog" component={() => <div>Blog</div>} />
+          <Route exact path="/blog" component={() => <Blog />} />
           <Route exact path="/sobre" component={() => <div>Sobre</div>} />
           <Route exact path="/aprende" component={() => <div>Aprende</div>} />
           <Route exact path="/contacto" component={() => <div>Contacto</div>} />
         </Switch>
-        <Footer />
+        <Footer
+          value={value}
+          setValue={setValue}
+          selectedIndex={selectedIndex}
+          setSelectedIndex={setSelectedIndex}
+          setIsLogoClicked={setIsLogoClicked}
+        />
       </BrowserRouter>
     </ThemeProvider>
   );

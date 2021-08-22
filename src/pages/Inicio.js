@@ -26,6 +26,7 @@ import { ReactComponent as RiojaMapa } from '../mapas/Rioja.svg';
 import ValenciaMapa from '../mapas/Valencia.js';
 
 import SideCcaaNavigation from '../components/ui/SideCcaaNavigation';
+import CardComponent from '../components/cards/CardComponent';
 
 const useStyles = makeStyles(theme => ({
   toolbarMargin: {
@@ -292,6 +293,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
           </Button>
         </Grid>
       </Grid>
+      <CardComponent />
     </div>
   );
 };
