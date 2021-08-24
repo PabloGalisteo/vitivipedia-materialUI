@@ -29,7 +29,7 @@ import { ReactComponent as PaisVascoMapa } from '../mapas/País Vasco.svg';
 import { ReactComponent as RiojaMapa } from '../mapas/Rioja.svg';
 import ValenciaMapa from '../mapas/Valencia.js';
 
-import SideCcaaNavigation from '../components/ui/SideCcaaNavigation';
+import SideCcaaNavigation from '../components/ui/sideCcaaNavigation';
 import CardComponent from '../components/cards/CardComponent';
 
 import winelist from '../wineList/list';
@@ -232,6 +232,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
   const [listOfWines] = useState(winelist);
   const [showRedWineList, setShowRedWineList] = useState(false);
   const [showWhiteWineList, setShowWhiteWineList] = useState(false);
+  const [regionSelected, setRegionSelected] = useState(false);
 
   const classes = useStyles();
   const mapRef = useRef();
@@ -252,6 +253,11 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
     setOpenDrawer(false);
     // setShowRedWineList(false);
     // setShowWhiteWineList(false);
+    if (mapName === 'Espana') {
+      setRegionSelected(false);
+    } else {
+      setRegionSelected(true);
+    }
   };
 
   //function to swap the list of wines
@@ -276,8 +282,6 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
   const toggleM = toggleMapas;
 
   useEffect(() => {
-    // setShowWhiteWineList();
-    // setShowRedWineList();
     setShowWhiteWineList(false);
     setShowRedWineList(false);
   }, [currentRegion, setShowRedWineList, setShowWhiteWineList]);
@@ -322,6 +326,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
             currentRegion={currentRegion}
             setCurrentRegion={setCurrentRegion}
             mapHeight={mapHeight}
+            regionSelected={regionSelected}
           />
         </SwipeableDrawer>
         <Grid
@@ -337,6 +342,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
             currentRegion={currentRegion}
             setCurrentRegion={setCurrentRegion}
             mapHeight={mapHeight}
+            regionSelected={regionSelected}
           />
         </Grid>
         <Grid item md={10} xs={12}>
@@ -389,30 +395,25 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
               <ArrowBackIosIcon />
             </Button>
           </Box>
-          <Box>
-            <Button
-              onClick={() => showRedWines(currentRegion)}
-              className={classes.bestWinesSentenceStyle}
-            >
-              The best red wine from {regionTitle}
-              <ArrowDropDownIcon fontSize="large" />
-            </Button>
-            <Button
-              onClick={() => showWhiteWines(currentRegion)}
-              className={classes.bestWinesSentenceStyle}
-            >
-              The best white wine from {regionTitle}
-              <ArrowDropDownIcon fontSize="large" />{' '}
-            </Button>
-          </Box>
         </Grid>
       </Grid>
       <Grid container>
+        <Grid item xs={12}>
+          <Button
+            onClick={() => showRedWines()}
+            className={classes.bestWinesSentenceStyle}
+          >
+            The best red wine from {regionTitle}
+            <ArrowDropDownIcon fontSize="large" />
+          </Button>
+        </Grid>
+
         {showRedWineList &&
           listOfWines
             .filter(
               (item, idx) =>
-                item.region === currentRegion && item.type === 'red'
+                (item.region === currentRegion || currentRegion === 'Espana') &&
+                item.type === 'red'
             )
             .map((item, idx) => {
               return (
@@ -421,12 +422,22 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
                 </Grid>
               );
             })}
+        <Grid item xs={12}>
+          <Button
+            onClick={() => showWhiteWines()}
+            className={classes.bestWinesSentenceStyle}
+          >
+            The best white wine from {regionTitle}
+            <ArrowDropDownIcon fontSize="large" />{' '}
+          </Button>
+        </Grid>
 
         {showWhiteWineList &&
           listOfWines
             .filter(
               (item, idx) =>
-                item.region === currentRegion && item.type === 'white'
+                (item.region === currentRegion || currentRegion === 'Espana') &&
+                item.type === 'white'
             )
             .map((item, idx) => {
               return (

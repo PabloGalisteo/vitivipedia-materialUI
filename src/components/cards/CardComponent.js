@@ -17,7 +17,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 
-import perdiz from '../../vinos/RiberaDueroTintos/canta-la-perdiz.png';
+import perdiz from '../../vinos/canta-la-perdiz.png';
 
 const useStyles = makeStyles(theme => ({
   root: {

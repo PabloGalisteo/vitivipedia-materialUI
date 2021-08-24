@@ -21,7 +21,8 @@ const SideCcaaNavigation = ({
   toggleMapas,
   currentRegion,
   setCurrentRegion,
-  mapHeight
+  mapHeight,
+  regionSelected
 }) => {
   const classes = useStyles();
 
@@ -65,6 +66,7 @@ const SideCcaaNavigation = ({
           buttonColor={item.color}
           hoverButtonList={setCurrentRegion}
           value={item.value}
+          regionSelected={regionSelected}
         />
       ))}
     </div>

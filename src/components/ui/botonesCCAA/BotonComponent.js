@@ -15,7 +15,8 @@ const BotonComponent = ({
   title,
   buttonColor,
   hoverButtonList,
-  value
+  value,
+  regionSelected
 }) => {
   const classes = styles();
   return (
@@ -25,7 +26,14 @@ const BotonComponent = ({
       className={marginButtton}
       variant="contained"
       onMouseEnter={() => hoverButtonList(value)}
-      onMouseLeave={() => hoverButtonList('')}
+      onMouseLeave={() => {
+        //if region is selected then don't reset selected region or current region
+        if (regionSelected) {
+          return;
+        }
+
+        hoverButtonList('');
+      }}
       style={{
         backgroundColor: `${buttonColor}`,
         opacity: isActive ? 0.7 : 1
