@@ -5,6 +5,10 @@ import Button from '@material-ui/core/Button';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Box from '@material-ui/core/Box';
 
+// --------- icons ---------- //
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+
 // -------- mapas ----------- //
 import EspanaMapa from '../mapas/España.js';
 import { ReactComponent as AndaluciaMapa } from '../mapas/Andalucia.svg';
@@ -27,6 +31,8 @@ import ValenciaMapa from '../mapas/Valencia.js';
 
 import SideCcaaNavigation from '../components/ui/SideCcaaNavigation';
 import CardComponent from '../components/cards/CardComponent';
+
+import winelist from '../wineList/list';
 
 const useStyles = makeStyles(theme => ({
   toolbarMargin: {
@@ -75,6 +81,36 @@ const useStyles = makeStyles(theme => ({
   },
   mapRoot: {
     flex: 1
+  },
+  containerButtons: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginRight: '0.5em'
+  },
+  arrowBackStyle: {
+    backgroundColor: '#F8AC88',
+    '&:hover, &:active': {
+      backgroundColor: '#F8AC88'
+    },
+    height: '2.6em',
+    marginTop: '0.5em'
+  },
+  notShowArrowBiggerScreens: {
+    [theme.breakpoints.up('md')]: {
+      display: 'none'
+    }
+  },
+  bestWinesSentenceStyle: {
+    color: '#ffff',
+    [theme.breakpoints.up('lg')]: {
+      fontSize: '2em'
+    },
+    [theme.breakpoints.down('md')]: {
+      fontSize: '1.5em'
+    },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1em'
+    }
   }
 }));
 
@@ -83,97 +119,120 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
     {
       name: 'Espana',
       component: EspanaMapa,
-      isVisible: true
+      isVisible: true,
+      correctTitle: 'España'
     },
     {
       name: 'Andalucia',
       component: AndaluciaMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Andalucía'
     },
     {
       name: 'Aragon',
       component: AragonMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Aragón'
     },
     {
       name: 'Asturias',
       component: AsturiasMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Asturias'
     },
     {
       name: 'Cantabria',
       component: CantabriaMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Cantabria'
     },
     {
       name: 'CastillaLaMancha',
       component: CastillaLaManchaMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Castilla la Mancha'
     },
     {
       name: 'CastillaLeon',
       component: CastillaLeonMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Castilla y León'
     },
     {
       name: 'Cataluna',
       component: CatalunaMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Cataluña'
     },
     {
       name: 'Extremadura',
       component: ExtremaduraMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Extremadura'
     },
     {
       name: 'Galicia',
       component: GaliciaMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Galicia'
     },
     {
       name: 'IslasBaleares',
       component: IslasBalearesMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Islas Baleares'
     },
     {
       name: 'IslasCanarias',
       component: IslasCanariasMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Islas Canarias'
     },
     {
       name: 'Madrid',
       component: MadridMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Madrid'
     },
     {
       name: 'Murcia',
       component: MurciaMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Murcia'
     },
     {
       name: 'Navarra',
       component: NavarraMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Navarra'
     },
     {
       name: 'PaisVasco',
       component: PaisVascoMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'País Vasco'
     },
     {
       name: 'Rioja',
       component: RiojaMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'La Rioja'
     },
     {
       name: 'Valencia',
       component: ValenciaMapa,
-      isVisible: false
+      isVisible: false,
+      correctTitle: 'Valencia'
     }
   ]);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [currentRegion, setCurrentRegion] = useState('');
+  const [currentRegion, setCurrentRegion] = useState('Espana');
+  const [regionTitle, setRegionTitle] = useState('España');
   const [mapHeight, setMapHeight] = useState(null);
+  const [listOfWines] = useState(winelist);
+  const [showRedWineList, setShowRedWineList] = useState(false);
+  const [showWhiteWineList, setShowWhiteWineList] = useState(false);
+
   const classes = useStyles();
   const mapRef = useRef();
 
@@ -182,16 +241,46 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
 
     updatedMapsList.forEach(map => {
       if (map.name === mapName) {
+        setRegionTitle(map.correctTitle);
         map.isVisible = true;
       } else {
         map.isVisible = false;
       }
     });
     toogleMapsList(updatedMapsList);
+    setCurrentRegion(mapName);
     setOpenDrawer(false);
+    // setShowRedWineList(false);
+    // setShowWhiteWineList(false);
+  };
+
+  //function to swap the list of wines
+
+  const showRedWines = () => {
+    if (showRedWineList) {
+      setShowRedWineList(false);
+    } else {
+      setShowRedWineList(true);
+    }
+  };
+
+  const showWhiteWines = () => {
+    console.log(showWhiteWineList);
+    if (showWhiteWineList) {
+      setShowWhiteWineList(false);
+    } else {
+      setShowWhiteWineList(true);
+    }
   };
 
   const toggleM = toggleMapas;
+
+  useEffect(() => {
+    // setShowWhiteWineList();
+    // setShowRedWineList();
+    setShowWhiteWineList(false);
+    setShowRedWineList(false);
+  }, [currentRegion, setShowRedWineList, setShowWhiteWineList]);
 
   useEffect(() => {
     if (isLogoClicked) {
@@ -284,16 +373,69 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
               );
             })}
           </Box>
-          <Button
-            variant="contained"
-            className={`${classes.navigationToggler} ${classes.comunidadesStyleBtn}`}
-            onClick={() => setOpenDrawer(true)}
-          >
-            Comunidades
-          </Button>
+          <Box className={classes.containerButtons}>
+            <Button
+              variant="contained"
+              className={`${classes.navigationToggler} ${classes.comunidadesStyleBtn}`}
+              onClick={() => setOpenDrawer(true)}
+            >
+              Comunidades
+            </Button>
+            <Button
+              variant="contained"
+              className={`${classes.arrowBackStyle} ${classes.notShowArrowBiggerScreens}`}
+              onClick={() => toggleMapas('Espana')}
+            >
+              <ArrowBackIosIcon />
+            </Button>
+          </Box>
+          <Box>
+            <Button
+              onClick={() => showRedWines(currentRegion)}
+              className={classes.bestWinesSentenceStyle}
+            >
+              The best red wine from {regionTitle}
+              <ArrowDropDownIcon fontSize="large" />
+            </Button>
+            <Button
+              onClick={() => showWhiteWines(currentRegion)}
+              className={classes.bestWinesSentenceStyle}
+            >
+              The best white wine from {regionTitle}
+              <ArrowDropDownIcon fontSize="large" />{' '}
+            </Button>
+          </Box>
         </Grid>
       </Grid>
-      <CardComponent />
+      <Grid container>
+        {showRedWineList &&
+          listOfWines
+            .filter(
+              (item, idx) =>
+                item.region === currentRegion && item.type === 'red'
+            )
+            .map((item, idx) => {
+              return (
+                <Grid item key={idx + item.name}>
+                  <CardComponent className={classes.cardStyle} />
+                </Grid>
+              );
+            })}
+
+        {showWhiteWineList &&
+          listOfWines
+            .filter(
+              (item, idx) =>
+                item.region === currentRegion && item.type === 'white'
+            )
+            .map((item, idx) => {
+              return (
+                <Grid item key={idx + item.name}>
+                  <CardComponent className={classes.cardStyle} />
+                </Grid>
+              );
+            })}
+      </Grid>
     </div>
   );
 };

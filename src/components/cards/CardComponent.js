@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -16,14 +17,23 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
 
+import perdiz from '../../vinos/RiberaDueroTintos/canta-la-perdiz.png';
+
 const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 345
+    maxWidth: 345,
+    margin: '0.5em'
+  },
+  imgStyle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
   },
   media: {
-    height: 0,
-    paddingTop: '56.25%' // 16:9
+    height: '20em'
   },
+
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
@@ -60,14 +70,17 @@ const CardComponent = () => {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title="Canta la Perdiz"
+        subheader="Dominio del Aguila"
+        tag="Ribera del Duero"
       />
-      <CardMedia
-        className={classes.media}
-        image="../../vinos/RiberaDueroTintos/canta-la-perdiz.png"
-        title="Canta la perdiz Ribera del Duero"
-      />
+      <Box className={classes.imgStyle}>
+        <img
+          className={classes.media}
+          src={perdiz}
+          alt="Canta la perdiz Ribera del Duero"
+        />
+      </Box>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           This impressive paella is a perfect party dish and a fun meal to cook

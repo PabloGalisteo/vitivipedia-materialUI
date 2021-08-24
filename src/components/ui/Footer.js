@@ -35,8 +35,7 @@ const useStyles = makeStyles(theme => ({
     fontSize: '0.75rem',
     fontWeight: 'bold',
     marginTop: '2.5em',
-    display: 'flex'
-    //here I need to separate links an unable flex-wrap to position on the side of logo
+    flex: 1
   },
   icon: {
     height: '2em',
@@ -47,14 +46,12 @@ const useStyles = makeStyles(theme => ({
     },
     [theme.breakpoints.down('md')]: {
       height: '1.5em',
-      width: '1.5em'
+      width: '1.5em',
+      marginLeft: '3.5em'
     }
   },
   socialContainer: {
-    position: 'absolute',
-    marginTop: '-2.5em',
-
-    right: '0.60em'
+    marginTop: '-2.5em'
   }
 }));
 
@@ -64,14 +61,14 @@ export default function Footer(props) {
   return (
     <footer className={classes.footer}>
       <Grid container>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={5} md={6} sm={3}>
           <img
             className={classes.logo}
             src={logoViti}
             alt="logo-vitivipedia"
           ></img>
         </Grid>
-        <Grid item xs={12} sm={9}>
+        <Grid item xs={7} md={6} sm={9}>
           <Grid container>
             <Grid
               className={`${classes.link} ${classes.mobileFooter}`}
@@ -79,7 +76,7 @@ export default function Footer(props) {
               component={Link}
               onClick={() => props.setValue(0)}
               to="/"
-              sm={3}
+              xs={2}
             >
               Inicio
             </Grid>
@@ -89,7 +86,7 @@ export default function Footer(props) {
               component={Link}
               onClick={() => props.setValue(1)}
               to="/blog"
-              sm={3}
+              xs={2}
             >
               Blog
             </Grid>
@@ -99,7 +96,7 @@ export default function Footer(props) {
               component={Link}
               onClick={() => props.setValue(2)}
               to="/sobre"
-              sm={3}
+              xs={2}
             >
               Sobre
             </Grid>
@@ -107,24 +104,28 @@ export default function Footer(props) {
               className={`${classes.link} ${classes.mobileFooter}`}
               item
               component={Link}
-              onClick={() => props.setValue(3)}
+              onClick={() => props.setValue(2)}
               to="/contacto"
-              sm={3}
+              xs={2}
             >
               Contacto
             </Grid>
+            <Grid
+              item
+              component={'a'}
+              href="https://www.instagram.com/vitivipedia/"
+              rel="noopener noreferrer"
+              target="_blank"
+              xs={2}
+              className={`${classes.link} ${classes.mobileFooter}`}
+            >
+              <img
+                alt="instagram logo"
+                src={instagram}
+                className={classes.icon}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-      </Grid>
-      <Grid container justify="flex-end" className={classes.socialContainer}>
-        <Grid
-          item
-          component={'a'}
-          href="https://www.instagram.com/vitivipedia/"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <img alt="instagram logo" src={instagram} className={classes.icon} />
         </Grid>
       </Grid>
     </footer>

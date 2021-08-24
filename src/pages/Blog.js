@@ -33,12 +33,13 @@ const useStyles = makeStyles(theme => ({
   },
   imgPoster: {
     width: '100%',
-    height: '100%',
+    height: '50%',
     marginTop: '-1.7em'
   },
   blogTitle: {
     fontWeight: 800,
-    paddingBottom: theme.spacing(3)
+    paddingBottom: theme.spacing(3),
+    color: '#ffff'
   },
   card: {
     maxWidth: '100%'
