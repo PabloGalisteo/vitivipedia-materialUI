@@ -1,245 +1,246 @@
-import React, { useState, useEffect, useRef } from 'react';
-import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import Box from '@material-ui/core/Box';
+import React, { useState, useEffect, useRef } from "react";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import Box from "@material-ui/core/Box";
 
 // --------- icons ---------- //
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 // -------- mapas ----------- //
-import EspanaMapa from '../mapas/España.js';
-import { ReactComponent as AndaluciaMapa } from '../mapas/Andalucia.svg';
-import { ReactComponent as AragonMapa } from '../mapas/Aragón.svg';
-import { ReactComponent as AsturiasMapa } from '../mapas/Asturias.svg';
-import { ReactComponent as CantabriaMapa } from '../mapas/Cantabria.svg';
-import { ReactComponent as CastillaLaManchaMapa } from '../mapas/Castilla-la-Mancha.svg';
-import { ReactComponent as CastillaLeonMapa } from '../mapas/Castilla y León.svg';
-import { ReactComponent as CatalunaMapa } from '../mapas/Cataluña.svg';
-import { ReactComponent as ExtremaduraMapa } from '../mapas/Extremadura.svg';
-import { ReactComponent as GaliciaMapa } from '../mapas/Galicia.svg';
-import { ReactComponent as IslasBalearesMapa } from '../mapas/Islas Baleares.svg';
-import { ReactComponent as IslasCanariasMapa } from '../mapas/Islas Canarias.svg';
-import { ReactComponent as MadridMapa } from '../mapas/Madrid.svg';
-import { ReactComponent as MurciaMapa } from '../mapas/Murcia.svg';
-import { ReactComponent as NavarraMapa } from '../mapas/Navarra.svg';
-import { ReactComponent as PaisVascoMapa } from '../mapas/País Vasco.svg';
-import { ReactComponent as RiojaMapa } from '../mapas/Rioja.svg';
-import ValenciaMapa from '../mapas/Valencia.js';
+import EspanaMapa from "../mapas/España.js";
+import { ReactComponent as AndaluciaMapa } from "../mapas/Andalucia.svg";
+import { ReactComponent as AragonMapa } from "../mapas/Aragón.svg";
+import { ReactComponent as AsturiasMapa } from "../mapas/Asturias.svg";
+import { ReactComponent as CantabriaMapa } from "../mapas/Cantabria.svg";
+import { ReactComponent as CastillaLaManchaMapa } from "../mapas/Castilla-la-Mancha.svg";
+import { ReactComponent as CastillaLeonMapa } from "../mapas/Castilla y León.svg";
+import { ReactComponent as CatalunaMapa } from "../mapas/Cataluña.svg";
+import { ReactComponent as ExtremaduraMapa } from "../mapas/Extremadura.svg";
+import { ReactComponent as GaliciaMapa } from "../mapas/Galicia.svg";
+import { ReactComponent as IslasBalearesMapa } from "../mapas/Islas Baleares.svg";
+import { ReactComponent as IslasCanariasMapa } from "../mapas/Islas Canarias.svg";
+import { ReactComponent as MadridMapa } from "../mapas/Madrid.svg";
+import { ReactComponent as MurciaMapa } from "../mapas/Murcia.svg";
+import { ReactComponent as NavarraMapa } from "../mapas/Navarra.svg";
+import { ReactComponent as PaisVascoMapa } from "../mapas/País Vasco.svg";
+import { ReactComponent as RiojaMapa } from "../mapas/Rioja.svg";
+import ValenciaMapa from "../mapas/Valencia.js";
 
-import SideCcaaNavigation from '../components/ui/SideCcaaNavigation';
-import CardComponent from '../components/cards/CardComponent';
+import SideCcaaNavigation from "../components/ui/SideCcaaNavigation";
+import CardComponent from "../components/cards/CardComponent";
 
-import winelist from '../wineList/list';
+import winelist from "../wineList/list";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   toolbarMargin: {
     ...theme.mixins.toolbar,
-    marginBottom: '3em',
-    [theme.breakpoints.down('md')]: {
-      marginBottom: '2em'
+    marginBottom: "3em",
+    [theme.breakpoints.down("md")]: {
+      marginBottom: "2em",
     },
-    [theme.breakpoints.down('xs')]: {
-      marginBottom: '1.25em'
-    }
+    [theme.breakpoints.down("xs")]: {
+      marginBottom: "1.25em",
+    },
   },
   width: {
-    width: '100%'
+    width: "100%",
   },
   opacity: {
-    opacity: 0.4
+    opacity: 0.4,
   },
   marginBottomButton: {
-    marginBottom: '9.4em'
+    marginBottom: "9.4em",
   },
   hideButtons: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
   navigationToggler: {
-    [theme.breakpoints.up('md')]: {
-      display: 'none'
-    }
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
   },
   mapContainer: {
-    backgroundColor: '#daf7ff',
-    margin: '0.5em'
+    backgroundColor: "#daf7ff",
+    margin: "0.5em",
   },
   comunidadesStyleBtn: {
-    backgroundColor: '#f8ac88',
-    margin: '0.5em',
-    '&:hover': {
-      backgroundColor: '#f78550'
-    }
+    backgroundColor: "#f8ac88",
+    margin: "0.5em",
+    "&:hover": {
+      backgroundColor: "#f78550",
+    },
   },
   mapBorderRadius: {
-    borderRadius: '1em',
-    overflow: 'hidden'
+    borderRadius: "1em",
+    overflow: "hidden",
   },
   mapRoot: {
-    flex: 1
+    flex: 1,
   },
   containerButtons: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginRight: '0.5em'
+    display: "flex",
+    justifyContent: "space-between",
+    marginRight: "0.5em",
   },
   arrowBackStyle: {
-    backgroundColor: '#F8AC88',
-    '&:hover, &:active': {
-      backgroundColor: '#F8AC88'
+    backgroundColor: "#F8AC88",
+    "&:hover, &:active": {
+      backgroundColor: "#F8AC88",
     },
-    height: '2.6em',
-    marginTop: '0.5em'
+    height: "2.6em",
+    marginTop: "0.5em",
   },
   notShowArrowBiggerScreens: {
-    [theme.breakpoints.up('md')]: {
-      display: 'none'
-    }
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
   },
   bestWinesSentenceStyle: {
-    color: '#ffff',
-    [theme.breakpoints.up('lg')]: {
-      fontSize: '2em'
+    color: "#ffff",
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "2em",
     },
-    [theme.breakpoints.down('md')]: {
-      fontSize: '1.5em'
+    [theme.breakpoints.down("md")]: {
+      fontSize: "1.5em",
     },
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '1em'
-    }
-  }
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1em",
+    },
+  },
 }));
 
 const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
   const [mapsList, toogleMapsList] = useState([
     {
-      name: 'Espana',
+      name: "Espana",
       component: EspanaMapa,
       isVisible: true,
-      correctTitle: 'España'
+      correctTitle: "España",
     },
     {
-      name: 'Andalucia',
+      name: "Andalucia",
       component: AndaluciaMapa,
       isVisible: false,
-      correctTitle: 'Andalucía'
+      correctTitle: "Andalucía",
     },
     {
-      name: 'Aragon',
+      name: "Aragon",
       component: AragonMapa,
       isVisible: false,
-      correctTitle: 'Aragón'
+      correctTitle: "Aragón",
     },
     {
-      name: 'Asturias',
+      name: "Asturias",
       component: AsturiasMapa,
       isVisible: false,
-      correctTitle: 'Asturias'
+      correctTitle: "Asturias",
     },
     {
-      name: 'Cantabria',
+      name: "Cantabria",
       component: CantabriaMapa,
       isVisible: false,
-      correctTitle: 'Cantabria'
+      correctTitle: "Cantabria",
     },
     {
-      name: 'CastillaLaMancha',
+      name: "CastillaLaMancha",
       component: CastillaLaManchaMapa,
       isVisible: false,
-      correctTitle: 'Castilla la Mancha'
+      correctTitle: "Castilla la Mancha",
     },
     {
-      name: 'CastillaLeon',
+      name: "CastillaLeon",
       component: CastillaLeonMapa,
       isVisible: false,
-      correctTitle: 'Castilla y León'
+      correctTitle: "Castilla y León",
     },
     {
-      name: 'Cataluna',
+      name: "Cataluna",
       component: CatalunaMapa,
       isVisible: false,
-      correctTitle: 'Cataluña'
+      correctTitle: "Cataluña",
     },
     {
-      name: 'Extremadura',
+      name: "Extremadura",
       component: ExtremaduraMapa,
       isVisible: false,
-      correctTitle: 'Extremadura'
+      correctTitle: "Extremadura",
     },
     {
-      name: 'Galicia',
+      name: "Galicia",
       component: GaliciaMapa,
       isVisible: false,
-      correctTitle: 'Galicia'
+      correctTitle: "Galicia",
     },
     {
-      name: 'IslasBaleares',
+      name: "IslasBaleares",
       component: IslasBalearesMapa,
       isVisible: false,
-      correctTitle: 'Islas Baleares'
+      correctTitle: "Islas Baleares",
     },
     {
-      name: 'IslasCanarias',
+      name: "IslasCanarias",
       component: IslasCanariasMapa,
       isVisible: false,
-      correctTitle: 'Islas Canarias'
+      correctTitle: "Islas Canarias",
     },
     {
-      name: 'Madrid',
+      name: "Madrid",
       component: MadridMapa,
       isVisible: false,
-      correctTitle: 'Madrid'
+      correctTitle: "Madrid",
     },
     {
-      name: 'Murcia',
+      name: "Murcia",
       component: MurciaMapa,
       isVisible: false,
-      correctTitle: 'Murcia'
+      correctTitle: "Murcia",
     },
     {
-      name: 'Navarra',
+      name: "Navarra",
       component: NavarraMapa,
       isVisible: false,
-      correctTitle: 'Navarra'
+      correctTitle: "Navarra",
     },
     {
-      name: 'PaisVasco',
+      name: "PaisVasco",
       component: PaisVascoMapa,
       isVisible: false,
-      correctTitle: 'País Vasco'
+      correctTitle: "País Vasco",
     },
     {
-      name: 'Rioja',
+      name: "Rioja",
       component: RiojaMapa,
       isVisible: false,
-      correctTitle: 'La Rioja'
+      correctTitle: "La Rioja",
     },
     {
-      name: 'Valencia',
+      name: "Valencia",
       component: ValenciaMapa,
       isVisible: false,
-      correctTitle: 'Valencia'
-    }
+      correctTitle: "Valencia",
+    },
   ]);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [currentRegion, setCurrentRegion] = useState('Espana');
-  const [regionTitle, setRegionTitle] = useState('España');
+  const [currentRegion, setCurrentRegion] = useState("Espana"); ///
+  const [regionTitle, setRegionTitle] = useState("España");
   const [mapHeight, setMapHeight] = useState(null);
   const [listOfWines] = useState(winelist);
   const [showRedWineList, setShowRedWineList] = useState(false);
   const [showWhiteWineList, setShowWhiteWineList] = useState(false);
+  const [regionSelected, setRegionSelected] = useState(false); /// 
 
   const classes = useStyles();
   const mapRef = useRef();
 
-  const toggleMapas = mapName => {
+  const toggleMapas = (mapName) => {
     const updatedMapsList = [...mapsList];
 
-    updatedMapsList.forEach(map => {
+    updatedMapsList.forEach((map) => {
       if (map.name === mapName) {
         setRegionTitle(map.correctTitle);
         map.isVisible = true;
@@ -252,6 +253,12 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
     setOpenDrawer(false);
     // setShowRedWineList(false);
     // setShowWhiteWineList(false);
+    if(mapName === 'Espana') {
+      setRegionSelected(false);
+    } else {
+      setRegionSelected(true);
+    }
+
   };
 
   //function to swap the list of wines
@@ -276,15 +283,13 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
   const toggleM = toggleMapas;
 
   useEffect(() => {
-    // setShowWhiteWineList();
-    // setShowRedWineList();
     setShowWhiteWineList(false);
     setShowRedWineList(false);
   }, [currentRegion, setShowRedWineList, setShowWhiteWineList]);
 
   useEffect(() => {
     if (isLogoClicked) {
-      toggleM('Espana');
+      toggleM("Espana");
       setIsLogoClicked(false);
     }
   }, [isLogoClicked, setIsLogoClicked, toggleM]);
@@ -302,7 +307,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
     };
 
     resize();
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       resize();
     });
   }, []);
@@ -322,6 +327,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
             currentRegion={currentRegion}
             setCurrentRegion={setCurrentRegion}
             mapHeight={mapHeight}
+            regionSelected={regionSelected}
           />
         </SwipeableDrawer>
         <Grid
@@ -329,7 +335,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
           md={2}
           xs={12}
           className={[classes.hideButtons, classes.marginBottomButton].join(
-            ' '
+            " "
           )}
         >
           <SideCcaaNavigation
@@ -337,6 +343,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
             currentRegion={currentRegion}
             setCurrentRegion={setCurrentRegion}
             mapHeight={mapHeight}
+            regionSelected={regionSelected}
           />
         </Grid>
         <Grid item md={10} xs={12}>
@@ -384,35 +391,29 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
             <Button
               variant="contained"
               className={`${classes.arrowBackStyle} ${classes.notShowArrowBiggerScreens}`}
-              onClick={() => toggleMapas('Espana')}
+              onClick={() => toggleMapas("Espana")}
             >
               <ArrowBackIosIcon />
-            </Button>
-          </Box>
-          <Box>
-            <Button
-              onClick={() => showRedWines(currentRegion)}
-              className={classes.bestWinesSentenceStyle}
-            >
-              The best red wine from {regionTitle}
-              <ArrowDropDownIcon fontSize="large" />
-            </Button>
-            <Button
-              onClick={() => showWhiteWines(currentRegion)}
-              className={classes.bestWinesSentenceStyle}
-            >
-              The best white wine from {regionTitle}
-              <ArrowDropDownIcon fontSize="large" />{' '}
             </Button>
           </Box>
         </Grid>
       </Grid>
       <Grid container>
+        <Grid item xs={12}>
+          <Button
+            onClick={() => showRedWines()}
+            className={classes.bestWinesSentenceStyle}
+          >
+            The best red wine from {regionTitle}
+            <ArrowDropDownIcon fontSize="large" />
+          </Button>
+        </Grid>
+
         {showRedWineList &&
           listOfWines
             .filter(
               (item, idx) =>
-                item.region === currentRegion && item.type === 'red'
+                (item.region === currentRegion || currentRegion === 'Espana') && item.type === "red"
             )
             .map((item, idx) => {
               return (
@@ -421,12 +422,21 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
                 </Grid>
               );
             })}
+        <Grid item xs={12}>
+          <Button
+            onClick={() => showWhiteWines()}
+            className={classes.bestWinesSentenceStyle}
+          >
+            The best white wine from {regionTitle}
+            <ArrowDropDownIcon fontSize="large" />{" "}
+          </Button>
+        </Grid>
 
         {showWhiteWineList &&
           listOfWines
             .filter(
               (item, idx) =>
-                item.region === currentRegion && item.type === 'white'
+                (item.region === currentRegion || currentRegion === 'Espana') && item.type === "white"
             )
             .map((item, idx) => {
               return (
