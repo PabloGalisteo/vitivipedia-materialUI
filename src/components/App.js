@@ -7,6 +7,7 @@ import theme from './ui/Theme';
 import Header from '../components/ui/Header';
 import Footer from '../components/ui/Footer';
 import Blog from '../pages/Blog';
+import ElaboracionVinoTinto from '../blog-post/ElaboracionVinoTinto';
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -37,7 +38,11 @@ function App() {
           <Route exact path="/blog" component={() => <Blog />} />
           <Route exact path="/sobre" component={() => <div>Sobre</div>} />
           <Route exact path="/aprende" component={() => <div>Aprende</div>} />
-          <Route exact path="/contacto" component={() => <div>Contacto</div>} />
+          <Route
+            exact
+            path="/contacto"
+            component={() => <ElaboracionVinoTinto />}
+          />
         </Switch>
         <Footer
           value={value}

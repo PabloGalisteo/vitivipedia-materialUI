@@ -6,7 +6,8 @@ const useStyles = makeStyles(() => ({
   sideBar: {
     display: 'flex',
     flexDirection: 'column',
-    height: '120vh',
+    marginTop: '0.5em',
+    height: '110vh',
     overflow: 'scroll'
   },
   marginBottomButton: {
