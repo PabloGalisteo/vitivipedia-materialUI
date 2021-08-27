@@ -25,14 +25,19 @@ const BotonComponent = ({
       onClick={onClick}
       className={marginButtton}
       variant="contained"
-      onMouseEnter={() => hoverButtonList(value)}
+      onMouseEnter={() => {
+        if (regionSelected) {
+          return;
+        }
+        hoverButtonList(value);
+      }}
       onMouseLeave={() => {
         //if region is selected then don't reset selected region or current region
         if (regionSelected) {
           return;
         }
 
-        hoverButtonList('');
+        hoverButtonList('Espana');
       }}
       style={{
         backgroundColor: `${buttonColor}`,

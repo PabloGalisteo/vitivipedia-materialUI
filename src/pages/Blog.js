@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -16,7 +17,7 @@ import Pagination from '@material-ui/lab/Pagination';
 // --------- images
 import Pablo from '../blog-fotos/pablo.png';
 import copaTinto from '../blog-fotos/elaboracionTinto/vino-tinto-botella-copa.jpg';
-import copaBlanco from '../blog-fotos/elaboracionBlanco/vino-blanco-botella-copa.jpg';
+import copaBlanco from '../blog-fotos/elaboracionBlanco/vino-blanco.jpg';
 import copaRosado from '../blog-fotos/elaboracionRosado/vino-rosado-botella-copa.jpg';
 import Pisco from '../blog-fotos/elaboracionPisco/pisco_7.jpg';
 import Espumoso from '../blog-fotos/espumosoElaboracion/champagne-botella-dibujo.jpg';
@@ -58,11 +59,37 @@ const useStyles = makeStyles(theme => ({
   paginationContainer: {
     display: 'flex',
     justifyContent: 'center'
+  },
+  styleCard: {
+    textDecoration: 'none',
+    color: 'inherit',
+    textDecorationColor: 'inherit'
   }
 }));
 
 const Blog = () => {
   const classes = useStyles();
+
+  const [blogData] = useState([
+    {
+      img: copaTinto,
+      title: '¿Cómo se elabora el vino tinto?',
+      content: `Podemos afirmar que el vino tinto es una bebida milenaria,
+      pero ¿sabes cómo se elabora? En Vitivipedia te lo explicamos.`,
+      avatar: Pablo,
+      author: 'Pablo Galisteo',
+      route: '/blog/elaboracion-vino-tinto'
+    },
+    {
+      img: copaBlanco,
+      title: '¿Cómo se elabora el vino blanco?',
+      content: `El vino blanco es, junto al tinto, de los más producidos del mundo, 
+      en Vitivipedia te enseñamos el proceso de elaboración del vino blanco.`,
+      avatar: Pablo,
+      author: 'Pablo Galisteo',
+      route: 'blog/elaboracion-vino-blanco'
+    }
+  ]);
 
   return (
     <div>
@@ -74,48 +101,46 @@ const Blog = () => {
           Artículos
         </Typography>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={4}>
-            {/* First article */}
-            <Card className={classes.root}>
-              <CardActionArea>
-                <CardMedia
-                  className={classes.media}
-                  image={copaTinto}
-                  title="Botella vino tinto y copa"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    ¿Cómo se elabora el vino tinto?
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    Podemos afirmar que el vino tinto es una bebida milenaria,
-                    pero ¿sabes cómo se elabora? En Vitivipedia te lo explicamos
-                    de forma detallada.
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions className={classes.cardActions}>
-                <Box className={classes.author}>
-                  <Avatar img src={Pablo} alt="Pablo" />
-                  <Box ml={2}>
-                    <Typography variant="subtitle2" component="p">
-                      Pablo Galisteo
-                    </Typography>
-                  </Box>
-                </Box>
-                <Box>
-                  <BookmarkBorderIcon />
-                </Box>
-              </CardActions>
-            </Card>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            {/* Second article */}
-            <Card className={classes.root}>
+          {blogData.map((item, idx) => (
+            <Grid item xs={12} sm={6} md={4}>
+              <Link to={item.route} style={{ textDecoration: 'none' }}>
+                <Card className={classes.root}>
+                  <CardActionArea>
+                    <CardMedia className={classes.media} image={item.img} />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {item.title}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        {item.content}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions className={classes.cardActions}>
+                    <Box className={classes.author}>
+                      <Avatar img src={item.avatar} alt="Pablo" />
+                      <Box ml={2}>
+                        <Typography variant="subtitle2" component="p">
+                          {item.author}
+                        </Typography>
+                      </Box>
+                    </Box>
+                    <Box>
+                      <BookmarkBorderIcon />
+                    </Box>
+                  </CardActions>
+                </Card>
+              </Link>
+            </Grid>
+          ))}
+
+          {/* <Grid item xs={12} sm={6} md={4}> */}
+          {/* Second article */}
+          {/* <Card className={classes.root}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
@@ -154,7 +179,7 @@ const Blog = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             {/* Third article */}
-            <Card className={classes.root}>
+          {/* <Card className={classes.root}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
@@ -193,7 +218,7 @@ const Blog = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             {/* Fourth article */}
-            <Card className={classes.root}>
+          {/* <Card className={classes.root}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
@@ -232,7 +257,7 @@ const Blog = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             {/* Fifth article */}
-            <Card className={classes.root}>
+          {/* <Card className={classes.root}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
@@ -271,7 +296,7 @@ const Blog = () => {
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
             {/* Sixth article */}
-            <Card className={classes.root}>
+          {/* <Card className={classes.root}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
@@ -306,8 +331,9 @@ const Blog = () => {
                   <BookmarkBorderIcon />
                 </Box>
               </CardActions>
-            </Card>
-          </Grid>
+            </Card>  */}
+
+          {/* </Grid> */}
         </Grid>
         <Box my={4} className={classes.paginationContainer}>
           <Pagination count={10} shape="rounded" variant="outlined" />

@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import '../App.css';
 
 import Inicio from '../pages/Inicio';
 import theme from './ui/Theme';
 import Header from '../components/ui/Header';
 import Footer from '../components/ui/Footer';
 import Blog from '../pages/Blog';
-import ElaboracionVinoTinto from '../blog-post/ElaboracionVinoTinto';
+import Articles from './Articles';
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -38,11 +39,8 @@ function App() {
           <Route exact path="/blog" component={() => <Blog />} />
           <Route exact path="/sobre" component={() => <div>Sobre</div>} />
           <Route exact path="/aprende" component={() => <div>Aprende</div>} />
-          <Route
-            exact
-            path="/contacto"
-            component={() => <ElaboracionVinoTinto />}
-          />
+          <Route exact path="/contacto" component={() => <div>Contacto</div>} />
+          <Route path="/blog/:page" component={() => <Articles />} />
         </Switch>
         <Footer
           value={value}

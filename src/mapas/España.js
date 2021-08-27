@@ -14,7 +14,7 @@ const Espana = ({ onRegionSelected, currentRegion, toggleMapas }) => {
     onRegionSelected(regionName);
   };
   const onLeave = () => {
-    onRegionSelected('');
+    onRegionSelected('Espana');
   };
 
   const onRegionClicked = region => {

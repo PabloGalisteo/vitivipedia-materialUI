@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 
@@ -16,6 +16,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import clsx from 'clsx';
+import { red } from '@material-ui/core/colors';
 
 import perdiz from '../../vinos/canta-la-perdiz.png';
 
@@ -45,13 +46,40 @@ const useStyles = makeStyles(theme => ({
     transform: 'rotate(180deg)'
   },
   avatar: {
-    backgroundColor: 'red'[500]
+    backgroundColor: red[500]
   }
 }));
 
-const CardComponent = () => {
+const CardComponent = ({
+  name,
+  region,
+  dorigen,
+  producer,
+  type,
+  variedad,
+  img,
+  shortDescription
+}) => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    const isFev = localStorage.getItem(name);
+    if (isFev) {
+      setIsFavorite(true);
+    }
+  }, []);
+
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      localStorage.removeItem(name);
+      setIsFavorite(false);
+    } else {
+      localStorage.setItem(name, true);
+      setIsFavorite(true);
+    }
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -62,35 +90,23 @@ const CardComponent = () => {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            {name.substring(0, 1)}
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Canta la Perdiz"
-        subheader="Dominio del Aguila"
-        tag="Ribera del Duero"
+        title={name}
+        subheader={dorigen}
       />
       <Box className={classes.imgStyle}>
-        <img
-          className={classes.media}
-          src={perdiz}
-          alt="Canta la perdiz Ribera del Duero"
-        />
+        <img className={classes.media} src={img} alt={name} />
       </Box>
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {shortDescription}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+        <IconButton aria-label="add to favorites" onClick={toggleFavorite}>
+          <FavoriteIcon style={{ color: isFavorite ? 'red' : 'gray' }} />
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
