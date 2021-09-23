@@ -1,11 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
 
+a {
+  text-decoration: none;
+  color: #00a0e3;
+}
+
 #espana {
   opacity: 1;
 }
 
 body {
-  background-color: #545454;
+  background-color: #eeeeee;
   margin: 0;
   overflow-x: hidden;
 }
@@ -32,7 +37,7 @@ body {
 .st1 {
   fill-rule: evenodd;
   clip-rule: evenodd;
-  fill: #999999;
+  fill: #fff;
   fill-opacity: 0.702;
 }
 .st2 {
@@ -125,3 +130,35 @@ body {
   stroke-miterlimit: 10;
   stroke-dasharray: 1.4173, 2.126;
 }
+
+.MuiInputBase-root {
+  color: #000 !important;
+  border-color: #000 !important;
+}
+
+.MuiFormLabel-root {
+  color: #000 !important;
+}
+
+.IN-widget {
+  display: none !important;
+}
+
+.MuiDialogContent-root {
+  margin-top: 2em;
+}
+.wineBtnActive {
+  background-color: #f78550 !important;
+}
+
+iframe[src*='ads-iframe'] {
+  display: none;
+}
+
+/* .MuiButton-outlined {
+  border: 1px solid rgba(255, 0, 0, 0.23) !important;
+}
+
+.MuiButton-outlined:hover {
+  color: rgb(255, 73, 73);
+} */

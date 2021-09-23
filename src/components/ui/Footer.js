@@ -10,13 +10,14 @@ const useStyles = makeStyles(theme => ({
   footer: {
     backgroundColor: '#414141',
     width: '100%',
-    zIndex: 1302,
+    zIndex: 999,
     position: 'relative'
   },
   logo: {
     width: '10em',
     color: 'white',
     margin: '1em',
+    marginTop: '1.8em',
     verticalAlign: 'bottom',
     [theme.breakpoints.down('md')]: {
       width: '8em'
@@ -35,7 +36,8 @@ const useStyles = makeStyles(theme => ({
     fontSize: '0.75rem',
     fontWeight: 'bold',
     marginTop: '2.5em',
-    flex: 1
+    flex: 1,
+    textAlign: 'center'
   },
   icon: {
     height: '2em',
@@ -52,6 +54,11 @@ const useStyles = makeStyles(theme => ({
   },
   socialContainer: {
     marginTop: '-2.5em'
+  },
+  mobileFooter: {
+    marginLeft: '3em',
+    marginRight: '2em',
+    paddingBottom: '0.5em'
   }
 }));
 
@@ -61,71 +68,60 @@ export default function Footer(props) {
   return (
     <footer className={classes.footer}>
       <Grid container>
-        <Grid item xs={5} md={6} sm={3}>
+        <Grid item xs={4} md={4} sm={3}>
           <img
             className={classes.logo}
             src={logoViti}
             alt="logo-vitivipedia"
           ></img>
         </Grid>
-        <Grid item xs={7} md={6} sm={9}>
-          <Grid container>
-            <Grid
-              className={`${classes.link} ${classes.mobileFooter}`}
-              item
-              component={Link}
-              onClick={() => props.setValue(0)}
-              to="/"
-              xs={2}
-            >
-              Inicio
-            </Grid>
-            <Grid
-              className={`${classes.link} ${classes.mobileFooter}`}
-              item
-              component={Link}
-              onClick={() => props.setValue(1)}
-              to="/blog"
-              xs={2}
-            >
-              Blog
-            </Grid>
-            <Grid
-              className={`${classes.link} ${classes.mobileFooter}`}
-              item
-              component={Link}
-              onClick={() => props.setValue(2)}
-              to="/sobre"
-              xs={2}
-            >
-              Sobre
-            </Grid>
-            <Grid
-              className={`${classes.link} ${classes.mobileFooter}`}
-              item
-              component={Link}
-              onClick={() => props.setValue(2)}
-              to="/contacto"
-              xs={2}
-            >
-              Contacto
-            </Grid>
-            <Grid
-              item
-              component={'a'}
-              href="https://www.instagram.com/vitivipedia/"
-              rel="noopener noreferrer"
-              target="_blank"
-              xs={2}
-              className={`${classes.link} ${classes.mobileFooter}`}
-            >
-              <img
-                alt="instagram logo"
-                src={instagram}
-                className={classes.icon}
-              />
-            </Grid>
-          </Grid>
+
+        <Grid
+          className={`${classes.link} ${classes.mobileFooter}`}
+          item
+          component={Link}
+          to="/politica-sobre-cookies"
+          xs={4}
+        >
+          Política sobre cookies
+        </Grid>
+        <Grid
+          className={`${classes.link} ${classes.mobileFooter}`}
+          item
+          component={Link}
+          to="/afiliacion"
+          xs={4}
+        >
+          Afiliación
+        </Grid>
+        <Grid
+          className={`${classes.link} ${classes.mobileFooter}`}
+          item
+          component={Link}
+          to="/politica-de-privacidad"
+          xs={4}
+        >
+          Política de privacidad
+        </Grid>
+        <Grid
+          className={`${classes.link} ${classes.mobileFooter}`}
+          item
+          component={Link}
+          to="/aviso-legal"
+          xs={4}
+        >
+          Aviso legal
+        </Grid>
+        <Grid
+          item
+          component={'a'}
+          href="https://www.instagram.com/vitivipedia/"
+          rel="noopener noreferrer"
+          target="_blank"
+          xs={4}
+          className={`${classes.link} ${classes.mobileFooter}`}
+        >
+          <img alt="instagram logo" src={instagram} className={classes.icon} />
         </Grid>
       </Grid>
     </footer>

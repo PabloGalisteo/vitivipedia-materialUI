@@ -1,8 +1,21 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+  mapHeight: {
+    width: '100%',
+    minHeight: '300px',
+    '@media(min-width: 500px)': {
+      minHeight: '580px'
+    }
+  }
+}));
 
 const Valencia = () => {
+  const classes = useStyles();
   return (
     <svg
+      className={classes.mapHeight}
       version="1.1"
       id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"

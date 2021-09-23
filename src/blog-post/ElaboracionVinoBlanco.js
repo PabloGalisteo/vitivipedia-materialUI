@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import Disqus from '../components/ui/Disqus';
 
 // -------- pictures ---------- /
 import barrica from '../blog-fotos/elaboracionBlanco/barrica-roble.jpg';
@@ -15,6 +12,8 @@ import prensa from '../blog-fotos/elaboracionBlanco/prensa-tradicional.jpg';
 import tolva from '../blog-fotos/elaboracionBlanco/tolva-uvas-blancas.jpg';
 import uvasBlancas from '../blog-fotos/elaboracionBlanco/uvas-blancas.jpg';
 import vinoBlanco from '../blog-fotos/elaboracionBlanco/vino-blanco.jpg';
+
+import SocialMediaIcons from '../components/ui/SocialMediaIcons';
 
 import Pablo from '../blog-fotos/pablo.png';
 
@@ -94,29 +93,51 @@ const useStyles = makeStyles(theme => ({
       lineHeight: '28px'
     }
   },
-  blogImages: {
-    marginTop: '3em',
-    width: '50%'
+  responsiveImgs: {
+    [theme.breakpoints.up('md')]: {
+      width: '60%',
+      topMargin: '1em'
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '60%',
+      topMargin: '1em'
+    }
+  },
+  responsiveImgBottle: {
+    [theme.breakpoints.up('md')]: {
+      width: '30%',
+      topMargin: '1em'
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '25%',
+      topMargin: '1em'
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '35%',
+      topMargin: '1em'
+    }
+  },
+  responsiveImglong: {
+    [theme.breakpoints.up('md')]: {
+      width: '40%',
+      topMargin: '1em'
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '40%',
+      topMargin: '1em'
+    }
   }
 }));
 
 const ElaboracionVinoBlanco = props => {
   const classes = useStyles();
 
-  useEffect(() => {
-    document.querySelector('body').style.backgroundColor = '#fff';
-
-    return () => {
-      document.querySelector('body').style.backgroundColor = '#545454';
-    };
-  }, []);
+  const [getTitle] = useState('¿Qué es el vino blanco y cómo se elabora?');
 
   return (
     <div className={classes.root}>
       <div className={classes.marginPage}>
-        <h1 className={classes.titleStyle}>
-          ¿Qué es el vino blanco y cómo se elabora?
-        </h1>
+        <h1 className={classes.titleStyle}>{getTitle}</h1>
         <h2 className={classes.subtitle}>El proceso paso a paso.</h2>
         <div className={classes.articleInfo}>
           <div className={classes.authorContainer}>
@@ -127,17 +148,7 @@ const ElaboracionVinoBlanco = props => {
               <p>Pablo Galisteo</p>
             </div>
           </div>
-          <div className={classes.socialContainer}>
-            <IconButton classes={{ root: classes.iconButton }}>
-              <FacebookIcon fontSize="small" />
-            </IconButton>
-            <IconButton classes={{ root: classes.iconButton }}>
-              <TwitterIcon fontSize="small" />
-            </IconButton>
-            <IconButton classes={{ root: classes.iconButton }}>
-              <LinkedInIcon fontSize="small" />
-            </IconButton>
-          </div>
+          <SocialMediaIcons title={getTitle} />
         </div>
         <div className={classes.imgContainerStyle}>
           <img className={classes.mainImgStyle} src={prensa} alt="prensa" />
@@ -152,7 +163,7 @@ const ElaboracionVinoBlanco = props => {
         </div>
         <div>
           <img
-            className={classes.blogImages}
+            className={classes.responsiveImglong}
             src={uvasBlancas}
             alt="racimo uvas blancas"
           ></img>
@@ -165,7 +176,7 @@ const ElaboracionVinoBlanco = props => {
         </div>
         <div>
           <img
-            className={classes.blogImages}
+            className={classes.responsiveImgs}
             src={tolva}
             alt="tolva acero vino"
           ></img>
@@ -179,7 +190,7 @@ const ElaboracionVinoBlanco = props => {
         </div>
         <div>
           <img
-            className={classes.blogImages}
+            className={classes.responsiveImgs}
             src={despalilladora}
             alt="despalilladora"
           ></img>
@@ -194,7 +205,7 @@ const ElaboracionVinoBlanco = props => {
         </div>
         <div>
           <img
-            className={classes.blogImages}
+            className={classes.responsiveImgs}
             src={prensa}
             alt="prensa vino"
           ></img>
@@ -210,7 +221,7 @@ const ElaboracionVinoBlanco = props => {
         </div>
         <div>
           <img
-            className={classes.blogImages}
+            className={classes.responsiveImglong}
             src={cuba}
             alt="cuba acero inoxidable"
           ></img>
@@ -226,7 +237,7 @@ const ElaboracionVinoBlanco = props => {
         </div>
         <div>
           <img
-            className={classes.blogImages}
+            className={classes.responsiveImgs}
             src={barrica}
             alt="barrica roble"
           ></img>
@@ -240,7 +251,7 @@ const ElaboracionVinoBlanco = props => {
         </div>
         <div>
           <img
-            className={classes.blogImages}
+            className={classes.responsiveImgs}
             src={embotelladora}
             alt="embotelladora"
           ></img>
@@ -254,7 +265,7 @@ const ElaboracionVinoBlanco = props => {
         </div>
         <div>
           <img
-            className={classes.blogImages}
+            className={classes.responsiveImgBottle}
             src={vinoBlanco}
             alt="vino blanco"
           ></img>
@@ -267,6 +278,7 @@ const ElaboracionVinoBlanco = props => {
             bodeguero/enólogo.
           </p>
         </div>
+        <Disqus url={window.location.href} identifier={window.location.href} />
       </div>
     </div>
   );

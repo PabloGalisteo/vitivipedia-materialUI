@@ -12,7 +12,8 @@ const wines = [
     variedad: 'albariño',
     img: sketch,
     shortDescription:
-      'Vino elaborado por el afamado elaborador Raúl Pérez. Se trata de un albariño único con un aura llena de misticismos.'
+      'Vino elaborado por el afamado elaborador Raúl Pérez. Se trata de un albariño único con un aura llena de misticismos.',
+    href: 'https://aficionadovino.com'
   },
   {
     name: 'Albamar',
@@ -21,7 +22,8 @@ const wines = [
     producer: 'Bodegas Albamar',
     type: 'red',
     variedad: 'Mencía, Caíño, Espadeiro',
-    img: perdiz
+    img: perdiz,
+    href: 'https://aficionadovino.com'
   },
   {
     name: 'La Dama',

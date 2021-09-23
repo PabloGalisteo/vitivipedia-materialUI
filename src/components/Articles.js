@@ -1,11 +1,85 @@
 import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
+
 import { useParams } from 'react-router-dom';
+import Grid from '@material-ui/core/Grid';
+import articlesList from '../components/articlesList';
+
 import ElaboracionVinoTinto from '../blog-post/ElaboracionVinoTinto';
 import ElaboracionVinoBlanco from '../blog-post/ElaboracionVinoBlanco';
+import ElaboracionVinoRosado from '../blog-post/ElaboracionVinoRosado';
+import ElaboracionEspumoso from '../blog-post/ElaboracionEspumoso';
+import FermentacionCarbonica from '../blog-post/FermentacionCarbonica';
+import Pisco from '../blog-post/Pisco';
+import Tequila from '../blog-post/Tequila';
+import Mezcal from '../blog-post/Mezcal';
+import MasterSommelier from '../blog-post/MasterSommelier';
+import Wset from '../blog-post/Wset';
 
+const useStyles = makeStyles(theme => ({
+  imgStyling: {
+    height: '6em'
+  },
+  individualGrid: {
+    marginBottom: '1.5em',
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      width: '25%',
+      padding: '0em 3em'
+    },
+    [theme.breakpoints.down('md')]: {
+      width: '50%',
+      padding: '0em 5em'
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      padding: '0em 2.5em'
+    }
+  },
+
+  linkStyle: {
+    textDecoration: 'none',
+    color: 'inherit',
+    width: '100%'
+  },
+  h3Style: {
+    fontWeight: 400,
+    fontFamily: 'Lora',
+    fontSize: '0.9em'
+  },
+  imgStyle: {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
+  hrStyle: {
+    width: '85%',
+    marginBottom: '2.5em'
+  }
+}));
 const Article = () => {
+  const classes = useStyles();
   const { page } = useParams();
   const [pageName, setPageName] = useState(null);
+  const [randomArticles, setRandomArticles] = useState([]);
+
+  useEffect(() => {
+    const tempArray = [...articlesList]
+      .sort(function () {
+        return Math.random() - 0.5;
+      })
+      .slice(0, 8);
+
+    setRandomArticles(tempArray);
+  }, []);
+
+  useEffect(() => {
+    document.querySelector('body').style.backgroundColor = '#fff';
+    window.scrollTo(0, 0, 'smooth'); // article was showing on the midle, this fixed it.
+    return () => {
+      document.querySelector('body').style.backgroundColor = '#EEEEEE';
+    };
+  }, [pageName]);
 
   useEffect(() => {
     switch (page) {
@@ -15,12 +89,62 @@ const Article = () => {
       case 'elaboracion-vino-blanco':
         setPageName(<ElaboracionVinoBlanco />);
         break;
+      case 'elaboracion-vino-rosado':
+        setPageName(<ElaboracionVinoRosado />);
+        break;
+      case 'elaboracion-vino-espumoso':
+        setPageName(<ElaboracionEspumoso />);
+        break;
+      case 'fermentacion-carbonica':
+        setPageName(<FermentacionCarbonica />);
+        break;
+      case 'elaboracion-pisco':
+        setPageName(<Pisco />);
+        break;
+      case 'elaboracion-tequila':
+        setPageName(<Tequila />);
+        break;
+      case 'elaboracion-mezcal':
+        setPageName(<Mezcal />);
+        break;
+      case 'master-sommelier':
+        setPageName(<MasterSommelier />);
+        break;
+      case 'wset-wine-spirit-education-trust':
+        setPageName(<Wset />);
+        break;
       default:
-        setPageName(<div>No page found</div>);
+        setPageName(<div>Página no encontrada</div>);
     }
   }, [page]);
 
-  return <div>{pageName ? pageName : null}</div>;
+  return (
+    <div>
+      {pageName ? pageName : null}
+      <h3 style={{ marginLeft: '7.5%' }}>Otros artículos</h3>
+      <hr className={classes.hrStyle}></hr>
+      <Grid container className={classes.mainContainer}>
+        {randomArticles.map((val, idx) => (
+          <Grid item lg={3} className={classes.individualGrid}>
+            <Link to={val.route} className={classes.linkStyle}>
+              <Grid container>
+                <Grid item lg={6} xs={6}>
+                  <h3 className={classes.h3Style}>{val.title}</h3>
+                </Grid>
+                <Grid item lg={6} xs={6} className={classes.imgStyle}>
+                  <img
+                    className={classes.imgStyling}
+                    src={val.img}
+                    alt={val.title}
+                  />
+                </Grid>
+              </Grid>
+            </Link>
+          </Grid>
+        ))}
+      </Grid>
+    </div>
+  );
 };
 
 export default Article;

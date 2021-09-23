@@ -79,6 +79,7 @@ const useStyles = makeStyles(theme => ({
       opacity: 1
     }
   },
+
   drawerIconContainer: {
     marginLeft: 'auto',
 
@@ -119,6 +120,7 @@ export default function Header(props) {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
+  //const location = useLocation();
 
   const handleChange = (e, newValue) => {
     props.setValue(newValue);
@@ -138,12 +140,12 @@ export default function Header(props) {
   const [menuOptions] = useState([
     { name: 'Aprende', link: '/aprende', activeIndex: 1, selectedIndex: 0 },
     { name: 'Vino', link: '/vino', activeIndex: 1, selectedIndex: 1 },
-    {
-      name: 'Destilados',
-      link: '/destilados',
-      activeIndex: 1,
-      selectedIndex: 2
-    },
+    // {
+    //   name: 'Destilados',
+    //   link: '/destilados',
+    //   activeIndex: 1,
+    //   selectedIndex: 2
+    // },
     { name: 'café', link: '/cafe', activeIndex: 1, selectedIndex: 3 }
   ]);
 
@@ -157,7 +159,8 @@ export default function Header(props) {
 
   useEffect(() => {
     [...menuOptions, ...routes].forEach(route => {
-      switch (window.location.pathname) {
+      const loc = '/' + window.location.pathname.split('/')[1];
+      switch (loc) {
         case `${route.link}`:
           if (props.value !== route.activeIndex) {
             props.setValue(route.activeIndex);

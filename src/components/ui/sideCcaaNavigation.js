@@ -61,7 +61,7 @@ const SideCcaaNavigation = ({
         <BotonComponent
           key={index + item.value}
           marginButtton={classes.marginBottomButton}
-          onClick={() => toggleMapas(item.value)}
+          onClick={() => toggleMapas(item.value, true)}
           isActive={currentRegion === item.value ? true : false}
           title={item.title}
           buttonColor={item.color}

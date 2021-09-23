@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
+
 import Button from '@material-ui/core/Button';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import Box from '@material-ui/core/Box';
-
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import EspanaMapa from '../mapas/España.js';
+
+import FavoriteWines from '../components/ui/FavoriteWines.js';
 
 // --------- icons ---------- //
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
@@ -17,86 +19,7 @@ import CardComponent from '../components/cards/CardComponent';
 import inicialMapList from '../components/mapList';
 import winelist from '../wineList/list';
 
-const useStyles = makeStyles(theme => ({
-  toolbarMargin: {
-    ...theme.mixins.toolbar,
-    marginBottom: '3em',
-    [theme.breakpoints.down('md')]: {
-      marginBottom: '2em'
-    },
-    [theme.breakpoints.down('xs')]: {
-      marginBottom: '1.25em'
-    }
-  },
-  width: {
-    width: '100%'
-  },
-  opacity: {
-    opacity: 0.4
-  },
-  marginBottomButton: {
-    marginBottom: '9.4em'
-  },
-  hideButtons: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
-  },
-  navigationToggler: {
-    [theme.breakpoints.up('md')]: {
-      display: 'none'
-    }
-  },
-  mapContainer: {
-    backgroundColor: '#daf7ff',
-    margin: '0.5em'
-  },
-  comunidadesStyleBtn: {
-    backgroundColor: '#f8ac88',
-    margin: '0.5em',
-    '&:hover': {
-      backgroundColor: '#f78550'
-    }
-  },
-  mapBorderRadius: {
-    borderRadius: '1em',
-    overflow: 'hidden'
-  },
-  mapRoot: {
-    flex: 1
-  },
-  containerButtons: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    marginRight: '0.5em'
-  },
-  arrowBackStyle: {
-    backgroundColor: '#F8AC88',
-    '&:hover, &:active': {
-      backgroundColor: '#F8AC88'
-    },
-    height: '2.6em',
-    marginTop: '0.5em'
-  },
-  notShowArrowBiggerScreens: {
-    [theme.breakpoints.up('md')]: {
-      display: 'none'
-    }
-  },
-  bestWinesSentenceStyle: {
-    color: '#ffff',
-    marginLeft: '7em',
-    [theme.breakpoints.up('lg')]: {
-      fontSize: '2em'
-    },
-    [theme.breakpoints.down('md')]: {
-      fontSize: '1.5em'
-    },
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '1em'
-    }
-  }
-}));
+import useStyles from './Inicio.styles';
 
 const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
   const [mapsList, toogleMapsList] = useState(inicialMapList);
@@ -108,11 +31,14 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
   const [showRedWineList, setShowRedWineList] = useState(false);
   const [showWhiteWineList, setShowWhiteWineList] = useState(false);
   const [regionSelected, setRegionSelected] = useState(false);
+  const [clickedRegion, setClickedRegion] = useState('Espana');
+  const [size, setSize] = useState(0);
+  const [isFavOpen, setIsFavOpen] = useState(false);
 
   const classes = useStyles();
   const mapRef = useRef();
 
-  const toggleMapas = mapName => {
+  const toggleMapas = (mapName, isClicked) => {
     const updatedMapsList = [...mapsList];
 
     updatedMapsList.forEach(map => {
@@ -124,42 +50,54 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
       }
     });
     toogleMapsList(updatedMapsList);
+
     setCurrentRegion(mapName);
+
     setOpenDrawer(false);
-    // setShowRedWineList(false);
-    // setShowWhiteWineList(false);
+
     if (mapName === 'Espana') {
       setRegionSelected(false);
     } else {
       setRegionSelected(true);
     }
+
+    if (isClicked) {
+      setClickedRegion(mapName);
+    } else {
+      setClickedRegion('Espana');
+    }
   };
 
   //function to swap the list of wines
 
-  const showRedWines = () => {
+  const showRedWines = e => {
+    // First we target parent button
+    const button = e.target.closest('button');
+
     if (showRedWineList) {
       setShowRedWineList(false);
+      // Here we remove css class
+      button.classList.remove('wineBtnActive');
     } else {
       setShowRedWineList(true);
+      button.classList.add('wineBtnActive');
     }
   };
 
-  const showWhiteWines = () => {
+  const showWhiteWines = e => {
+    const button = e.target.closest('button');
+
     console.log(showWhiteWineList);
     if (showWhiteWineList) {
       setShowWhiteWineList(false);
+      button.classList.remove('wineBtnActive');
     } else {
       setShowWhiteWineList(true);
+      button.classList.add('wineBtnActive');
     }
   };
 
   const toggleM = toggleMapas;
-
-  useEffect(() => {
-    setShowWhiteWineList(false);
-    setShowRedWineList(false);
-  }, [currentRegion, setShowRedWineList, setShowWhiteWineList]);
 
   useEffect(() => {
     if (isLogoClicked) {
@@ -168,8 +106,11 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
     }
   }, [isLogoClicked, setIsLogoClicked, toggleM]);
 
+  // useEffect to get real time size of map component
   useEffect(() => {
     const resize = () => {
+      setSize(window.outerWidth);
+
       if (window.outerWidth < 960) {
         setMapHeight(null);
         return;
@@ -180,7 +121,9 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
       }
     };
 
-    resize();
+    setTimeout(() => {
+      resize();
+    }, 100);
     window.addEventListener('resize', () => {
       resize();
     });
@@ -245,15 +188,30 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
                 );
               }
 
-              return (
+              let svgMap = (
                 <map.component
                   className={classes.width}
                   src={map.component}
                   key={index}
                 />
               );
+              if (size <= 768) {
+                svgMap = (
+                  <TransformWrapper>
+                    <TransformComponent>
+                      <map.component
+                        className={[classes.width, classes.mapHeight].join(' ')}
+                        src={map.component}
+                        key={index}
+                      />
+                    </TransformComponent>
+                  </TransformWrapper>
+                );
+              }
+              return svgMap;
             })}
           </Box>
+
           <Box className={classes.containerButtons}>
             <Button
               variant="contained"
@@ -272,13 +230,24 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
           </Box>
         </Grid>
       </Grid>
-      <Grid container>
+      <Grid container className={classes.bestWineContainer}>
+        <Grid item xs={12} className={classes.favBtn}>
+          <Button
+            onClick={e => setIsFavOpen(true)}
+            className={classes.favBtnStyle}
+            style={{ textTransform: 'none' }}
+          >
+            <span>Vinos favoritos</span>
+            <ArrowDropDownIcon fontSize="small" />
+          </Button>
+        </Grid>
         <Grid item xs={12}>
           <Button
-            onClick={() => showRedWines()}
+            onClick={e => showRedWines(e)}
             className={classes.bestWinesSentenceStyle}
+            style={{ textTransform: 'none' }}
           >
-            The best red wine from {regionTitle}
+            Los mejores vinos tintos de {regionTitle}
             <ArrowDropDownIcon fontSize="large" />
           </Button>
         </Grid>
@@ -287,7 +256,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
           listOfWines
             .filter(
               (item, idx) =>
-                (item.region === currentRegion || currentRegion === 'Espana') &&
+                (item.region === clickedRegion || clickedRegion === 'Espana') &&
                 item.type === 'red'
             )
             .map((item, idx) => {
@@ -303,16 +272,19 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
                     variedad={item.variedad}
                     img={item.img}
                     shortDescription={item.shortDescription}
+                    showHeart={true}
+                    href={item.href}
                   />
                 </Grid>
               );
             })}
         <Grid item xs={12}>
           <Button
-            onClick={() => showWhiteWines()}
+            onClick={e => showWhiteWines(e)}
             className={classes.bestWinesSentenceStyle}
+            style={{ textTransform: 'none' }}
           >
-            The best white wine from {regionTitle}
+            Los mejores vinos blancos de {regionTitle}
             <ArrowDropDownIcon fontSize="large" />{' '}
           </Button>
         </Grid>
@@ -321,7 +293,7 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
           listOfWines
             .filter(
               (item, idx) =>
-                (item.region === currentRegion || currentRegion === 'Espana') &&
+                (item.region === clickedRegion || clickedRegion === 'Espana') &&
                 item.type === 'white'
             )
             .map((item, idx) => {
@@ -337,11 +309,20 @@ const Inicio = ({ isLogoClicked, setIsLogoClicked }) => {
                     variedad={item.variedad}
                     img={item.img}
                     shortDescription={item.shortDescription}
+                    showHeart={true}
+                    href={item.href}
                   />
                 </Grid>
               );
             })}
       </Grid>
+      <SwipeableDrawer
+        anchor="right"
+        open={isFavOpen}
+        onClose={() => setIsFavOpen(false)}
+      >
+        <FavoriteWines />
+      </SwipeableDrawer>
     </div>
   );
 };

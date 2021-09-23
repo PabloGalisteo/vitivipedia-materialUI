@@ -41,7 +41,7 @@ const BotonComponent = ({
       }}
       style={{
         backgroundColor: `${buttonColor}`,
-        opacity: isActive ? 0.7 : 1
+        opacity: isActive && value !== 'Espana' ? 0.7 : 1
       }}
     >
       {title}
