@@ -1,6 +1,6 @@
 import { createTheme } from '@material-ui/core/styles';
 
-const mainColor = '#eeeeee';
+const mainColor = '#D9D9D9';
 const secondaryColor = '#000000';
 const terciaryColor = '#e94a4a';
 

@@ -10,7 +10,7 @@ a {
 }
 
 body {
-  background-color: #eeeeee;
+  background-color: #f2f2f2;
   margin: 0;
   overflow-x: hidden;
 }
@@ -20,7 +20,11 @@ body {
   cursor: pointer;
 }
 .region:hover {
-  opacity: 0.45;
+  opacity: 1;
+}
+
+.region:hover path {
+  fill: #f3e0a8;
 }
 
 #root {
@@ -147,18 +151,21 @@ body {
 .MuiDialogContent-root {
   margin-top: 2em;
 }
-.wineBtnActive {
-  background-color: #f78550 !important;
-}
 
 iframe[src*='ads-iframe'] {
   display: none;
 }
 
-/* .MuiButton-outlined {
-  border: 1px solid rgba(255, 0, 0, 0.23) !important;
+.myclass {
+  height: 1000px;
 }
 
-.MuiButton-outlined:hover {
-  color: rgb(255, 73, 73);
-} */
+.makeStyles-sideBar-53 {
+  background: #ddd8d2;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

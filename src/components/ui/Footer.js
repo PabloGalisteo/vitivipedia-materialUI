@@ -5,10 +5,9 @@ import Grid from '@material-ui/core/Grid';
 
 import instagram from '../../assets/instagram.svg';
 
-import logoViti from '../../assets/logo.svg';
 const useStyles = makeStyles(theme => ({
   footer: {
-    backgroundColor: '#414141',
+    backgroundColor: '#202020',
     width: '100%',
     zIndex: 999,
     position: 'relative'
@@ -35,11 +34,12 @@ const useStyles = makeStyles(theme => ({
     fontFamily: 'Arial',
     fontSize: '0.75rem',
     fontWeight: 'bold',
-    marginTop: '2.5em',
+    marginTop: '0.5em',
     flex: 1,
     textAlign: 'center'
   },
   icon: {
+    marginTop: '0.2em',
     height: '2em',
     width: '2em',
     [theme.breakpoints.down('xs')]: {
@@ -59,6 +59,9 @@ const useStyles = makeStyles(theme => ({
     marginLeft: '3em',
     marginRight: '2em',
     paddingBottom: '0.5em'
+  },
+  gridStyling: {
+    alignItems: 'center'
   }
 }));
 
@@ -67,15 +70,7 @@ export default function Footer(props) {
 
   return (
     <footer className={classes.footer}>
-      <Grid container>
-        <Grid item xs={4} md={4} sm={3}>
-          <img
-            className={classes.logo}
-            src={logoViti}
-            alt="logo-vitivipedia"
-          ></img>
-        </Grid>
-
+      <Grid container className={classes.gridStyling}>
         <Grid
           className={`${classes.link} ${classes.mobileFooter}`}
           item

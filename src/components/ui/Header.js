@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles, styled } from '@material-ui/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
@@ -18,7 +19,15 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import Badge from '@material-ui/core/Badge';
+
 import logo from '../../assets/logo.svg';
+import MapOutlinedIcon from '@material-ui/icons/MapOutlined';
+import actions from '../../store/actions';
+import UserDropdown from './UserDropdown';
+import { Avatar } from '@material-ui/core';
 
 function ElevationScroll(props) {
   const { children } = props;
@@ -46,7 +55,8 @@ const useStyles = makeStyles(theme => ({
   },
   logo: {
     height: '6em',
-    marginLeft: '25px',
+    margin: '0 auto',
+    //marginLeft: '1em',
     [theme.breakpoints.down('md')]: {
       height: '4.5em'
     },
@@ -104,13 +114,53 @@ const useStyles = makeStyles(theme => ({
       opacity: 1
     }
   },
-
   appbar: {
     zIndex: theme.zIndex.modal + 1
+  },
+  ctaButton: {
+    color: '#c72121'
+  },
+  mapHeaderIcon: {
+    marginLeft: '0.3em',
+    fontSize: '2em'
+  },
+  headerContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    [theme.breakpoints.down('md')]: {
+      width: '100%'
+      //height: '4.5em'
+    }
+  },
+  comunidadesStyleBtn: {
+    color: 'black',
+    borderRadius: '50%',
+    cursor: 'pointer',
+    padding: '0.5em',
+    backgroundColor: '#F2F2F2',
+
+    '&:hover': {
+      backgroundColor: '#004874'
+    },
+    [theme.breakpoints.up('lg')]: {
+      margin: '0em 1em 0em 1em'
+    }
+  },
+  userAvatar: {
+    backgroundColor: '#c72121'
   }
 }));
 
-export default function Header(props) {
+const ShoppingCartBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    right: -3,
+    top: 5,
+    //border: `2px solid ${theme.palette.background.paper}`,
+    padding: '0 6px'
+  }
+}));
+
+const Header = props => {
   const classes = useStyles();
   const theme = useTheme();
   const { setIsLogoClicked } = props;
@@ -120,7 +170,17 @@ export default function Header(props) {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
-  //const location = useLocation();
+  const location = useLocation();
+  const history = useHistory();
+  const [userDropdownEl, setUserDropdownEl] = React.useState(null);
+
+  const handleClick = event => {
+    setUserDropdownEl(event.currentTarget);
+  };
+
+  const handleUserDropdownClose = () => {
+    setUserDropdownEl(null);
+  };
 
   const handleChange = (e, newValue) => {
     props.setValue(newValue);
@@ -154,7 +214,8 @@ export default function Header(props) {
     { name: 'Blog', link: '/blog', activeIndex: 1 },
     { name: 'Sobre', link: '/sobre', activeIndex: 2 },
     // { name: 'Aprende', link: '/aprende', activeIndex: 3 },
-    { name: 'Contacto', link: '/contacto', activeIndex: 3 }
+    { name: 'Contacto', link: '/contacto', activeIndex: 3 },
+    { name: 'Productores', link: '/productores', activeIndex: 4 }
   ]);
 
   useEffect(() => {
@@ -188,13 +249,50 @@ export default function Header(props) {
         {routes.map((route, index) => (
           <Tab
             key={`${route}${index}`}
-            className={classes.tab}
+            className={
+              route.activeIndex === 4
+                ? [classes.tab, classes.ctaButton].join(' ')
+                : classes.tab
+            }
             component={Link}
             to={route.link}
             label={route.name}
           />
         ))}
         />
+        {props.favWines.length > 0 && (
+          <Tab
+            className={classes.tab}
+            component={Link}
+            onClick={() => props.toggleFavWines()}
+            style={{ marginLeft: '10px', minWidth: '60px' }}
+            label={<FavoriteIcon style={{ color: '#9e1e1e' }} />}
+          />
+        )}
+        {props.user && (
+          <Tab
+            className={classes.tab}
+            component={Link}
+            onClick={e => {
+              handleClick(e);
+            }}
+            style={{ marginLeft: '10px', minWidth: '60px' }}
+            label={
+              <Avatar className={classes.userAvatar}>
+                {props.user.firstName?.substring(0, 1).toUpperCase()}
+              </Avatar>
+            }
+          />
+        )}
+        {!props.user && (
+          <Tab
+            className={classes.tab}
+            component={Link}
+            onClick={() => history.push('/login')}
+            style={{ marginLeft: '10px', minWidth: '60px' }}
+            label="login"
+          />
+        )}
       </Tabs>
       <Menu
         id="simple-menu"
@@ -258,8 +356,57 @@ export default function Header(props) {
               </ListItemText>
             </ListItem>
           ))}
+          {props.favWines.length > 0 && (
+            <ListItem divider button onClick={() => props.toggleFavWines()}>
+              <ListItemText
+                className={classes.drawerItem}
+                disableTypography
+                style={{ display: 'flex' }}
+              >
+                <FavoriteIcon style={{ color: '#9e1e1e' }} /> &nbsp; Vinos
+                favoritos
+              </ListItemText>
+            </ListItem>
+          )}
+          {props.user && (
+            <ListItem
+              divider
+              button
+              onClick={() => {
+                history.push('/carrito');
+              }}
+            >
+              <ListItemText
+                className={classes.drawerItem}
+                disableTypography
+                style={{ display: 'flex' }}
+              >
+                <ShoppingCartBadge
+                  badgeContent={props.cart.length}
+                  color="secondary"
+                >
+                  <ShoppingCartIcon
+                    style={{ color: '#9e1e1e', fontSize: '30px' }}
+                  />
+                </ShoppingCartBadge>{' '}
+                &nbsp;&nbsp;&nbsp; Carrito
+              </ListItemText>
+            </ListItem>
+          )}
+          {!props.user && (
+            <ListItem divider button onClick={() => history.push('/login')}>
+              <ListItemText
+                className={classes.drawerItem}
+                disableTypography
+                style={{ display: 'flex' }}
+              >
+                Login
+              </ListItemText>
+            </ListItem>
+          )}
         </List>
       </SwipeableDrawer>
+
       <IconButton
         className={classes.drawerIconContainer}
         onClick={() => setOpenDrawer(!openDrawer)}
@@ -275,22 +422,60 @@ export default function Header(props) {
       <ElevationScroll>
         <AppBar position="fixed" className={classes.appbar}>
           <Toolbar disableGutters>
-            <Button
-              component={Link}
-              to="/"
-              disableRipple
-              onClick={() =>
-                props.value === 0 ? setIsLogoClicked(true) : props.setValue(0)
-              }
-              className={classes.logoContainer}
-            >
-              <img className={classes.logo} alt="vitivipedia logo" src={logo} />
-            </Button>
+            <div className={classes.headerContainer}>
+              {location.pathname === '/' && (
+                <MapOutlinedIcon
+                  size="large"
+                  className={`${classes.mapHeaderIcon} ${classes.comunidadesStyleBtn}`}
+                  onClick={() => props.headerMapToggle()}
+                >
+                  <MenuIcon fontSize="inherit" />
+                </MapOutlinedIcon>
+              )}
+
+              <Button
+                component={Link}
+                to="/"
+                disableRipple
+                onClick={() =>
+                  props.value === 0 ? setIsLogoClicked(true) : props.setValue(0)
+                }
+                className={classes.logoContainer}
+                style={{ width: location.pathname === '/' ? '100%' : null }}
+              >
+                <img
+                  className={classes.logo}
+                  alt="vitivipedia logo"
+                  src={logo}
+                />
+              </Button>
+            </div>
             {matches ? drawer : tabs}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
       <div className={classes.toolbarMargin} />
+      <UserDropdown
+        anchorEl={userDropdownEl}
+        handleClose={handleUserDropdownClose}
+      />
     </React.Fragment>
   );
-}
+};
+
+const mapStateToProps = state => {
+  return {
+    favWines: state.fevoriteWineList,
+    cart: state.cart,
+    user: state.user
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    toggleFavWines: () => dispatch(actions.toggleFavWines()),
+    headerMapToggle: () => dispatch(actions.headerMapToggle())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Link, useLocation } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import articlesList from '../components/articlesList';
 
-import ElaboracionVinoTinto from '../blog-post/ElaboracionVinoTinto';
-import ElaboracionVinoBlanco from '../blog-post/ElaboracionVinoBlanco';
-import ElaboracionVinoRosado from '../blog-post/ElaboracionVinoRosado';
-import ElaboracionEspumoso from '../blog-post/ElaboracionEspumoso';
-import FermentacionCarbonica from '../blog-post/FermentacionCarbonica';
-import Pisco from '../blog-post/Pisco';
-import Tequila from '../blog-post/Tequila';
-import Mezcal from '../blog-post/Mezcal';
-import MasterSommelier from '../blog-post/MasterSommelier';
-import Wset from '../blog-post/Wset';
+// import ElaboracionVinoTinto from '../blog-post/ElaboracionVinoTinto';
+// import ElaboracionVinoBlanco from '../blog-post/ElaboracionVinoBlanco';
+// import ElaboracionVinoRosado from '../blog-post/ElaboracionVinoRosado';
+// import ElaboracionEspumoso from '../blog-post/ElaboracionEspumoso';
+// import FermentacionCarbonica from '../blog-post/FermentacionCarbonica';
+// import Pisco from '../blog-post/Pisco';
+// import Tequila from '../blog-post/Tequila';
+// import Mezcal from '../blog-post/Mezcal';
+// import MasterSommelier from '../blog-post/MasterSommelier';
+// import Wset from '../blog-post/Wset';
+
+import ArticleComponent from '../blog-post/Article';
 
 const useStyles = makeStyles(theme => ({
   imgStyling: {
@@ -59,9 +62,11 @@ const useStyles = makeStyles(theme => ({
 }));
 const Article = () => {
   const classes = useStyles();
-  const { page } = useParams();
-  const [pageName, setPageName] = useState(null);
+  // const { page } = useParams();
+  // const [pageName, setPageName] = useState(null);
+  const [article, setArticle] = useState(null);
   const [randomArticles, setRandomArticles] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     const tempArray = [...articlesList]
@@ -79,48 +84,60 @@ const Article = () => {
     return () => {
       document.querySelector('body').style.backgroundColor = '#EEEEEE';
     };
-  }, [pageName]);
+  }, [article]);
 
   useEffect(() => {
-    switch (page) {
-      case 'elaboracion-vino-tinto':
-        setPageName(<ElaboracionVinoTinto />);
-        break;
-      case 'elaboracion-vino-blanco':
-        setPageName(<ElaboracionVinoBlanco />);
-        break;
-      case 'elaboracion-vino-rosado':
-        setPageName(<ElaboracionVinoRosado />);
-        break;
-      case 'elaboracion-vino-espumoso':
-        setPageName(<ElaboracionEspumoso />);
-        break;
-      case 'fermentacion-carbonica':
-        setPageName(<FermentacionCarbonica />);
-        break;
-      case 'elaboracion-pisco':
-        setPageName(<Pisco />);
-        break;
-      case 'elaboracion-tequila':
-        setPageName(<Tequila />);
-        break;
-      case 'elaboracion-mezcal':
-        setPageName(<Mezcal />);
-        break;
-      case 'master-sommelier':
-        setPageName(<MasterSommelier />);
-        break;
-      case 'wset-wine-spirit-education-trust':
-        setPageName(<Wset />);
-        break;
-      default:
-        setPageName(<div>Página no encontrada</div>);
+    const getPost = async slug => {
+      const response = await axios.get(
+        'http://backend.vitivipedia.com/wp-json/vitivipedia/v1/post/' + slug
+      );
+      const post = response.data; // wordpress format
+      setArticle(post);
+      //setBlogData(posts);
+    };
+    if (location.pathname && location.pathname !== '') {
+      const slug = location.pathname.split('/')[2];
+      getPost(slug);
     }
-  }, [page]);
+    // switch (page) {
+    //   case 'elaboracion-vino-tinto':
+    //     setPageName(<ElaboracionVinoTinto />);
+    //     break;
+    //   case 'elaboracion-vino-blanco':
+    //     setPageName(<ElaboracionVinoBlanco />);
+    //     break;
+    //   case 'elaboracion-vino-rosado':
+    //     setPageName(<ElaboracionVinoRosado />);
+    //     break;
+    //   case 'elaboracion-vino-espumoso':
+    //     setPageName(<ElaboracionEspumoso />);
+    //     break;
+    //   case 'fermentacion-carbonica':
+    //     setPageName(<FermentacionCarbonica />);
+    //     break;
+    //   case 'elaboracion-pisco':
+    //     setPageName(<Pisco />);
+    //     break;
+    //   case 'elaboracion-tequila':
+    //     setPageName(<Tequila />);
+    //     break;
+    //   case 'elaboracion-mezcal':
+    //     setPageName(<Mezcal />);
+    //     break;
+    //   case 'master-sommelier':
+    //     setPageName(<MasterSommelier />);
+    //     break;
+    //   case 'wset-wine-spirit-education-trust':
+    //     setPageName(<Wset />);
+    //     break;
+    //   default:
+    //     setPageName(<div>Página no encontrada</div>);
+    // }
+  }, []);
 
   return (
     <div>
-      {pageName ? pageName : null}
+      {article ? <ArticleComponent post={article} /> : null}
       <h3 style={{ marginLeft: '7.5%' }}>Otros artículos</h3>
       <hr className={classes.hrStyle}></hr>
       <Grid container className={classes.mainContainer}>

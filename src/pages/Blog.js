@@ -8,15 +8,11 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Avatar from '@material-ui/core/Avatar';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import Pagination from '@material-ui/lab/Pagination';
-import articlesList from '../components/articlesList';
 import SubsPanel from '../components/ui/SubsPanel';
-import Pablo from '../blog-fotos/pablo.png';
 
 // --------- images
 
@@ -42,8 +38,14 @@ const useStyles = makeStyles(theme => ({
   card: {
     maxWidth: '100%'
   },
+  mediaContainer: {
+    margin: '-1rem -1rem 0rem -1rem'
+  },
+
   media: {
-    height: 240
+    height: 240,
+    width: '100%',
+    objectFit: 'contain'
   },
   cardActions: {
     display: 'flex',
@@ -51,7 +53,8 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'space-between'
   },
   author: {
-    display: 'flex'
+    display: 'flex',
+    alignItems: 'center'
   },
   paginationContainer: {
     display: 'flex',
@@ -68,12 +71,15 @@ const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('xs')]: {
       flexDirection: 'column'
     }
+  },
+  avatar: {
+    borderRadius: '50%',
+    height: '40px'
   }
 }));
 
 const Blog = () => {
   const classes = useStyles();
-  //const pageUrl = useLocation().search.;
   const location = useLocation();
   const history = useHistory();
   const search = location.search;
@@ -111,48 +117,23 @@ const Blog = () => {
     return Math.floor(totalPages);
   };
 
-  const getPosts = async () => {
-    const response = await axios.get(
-      'http://backend.vitivipedia.com/wp-json/wp/v2/posts'
-    );
-    const posts = response.data; // wordpress format
-    const updatedPosts = []; // our format
-
-    posts.forEach(async post => {
-      if (post.featured_media === 0) {
-        updatedPosts.push({
-          title: post.title.rendered,
-          content: post.content.rendered,
-          route: '/blog/' + post.slug,
-          avatar: Pablo,
-          img: 'asdfasf',
-          author:
-            'http://backend.vitivipedia.com/wp-json/wp/v2/users/' + post.author
-        });
-        return;
-      }
-      const res = await axios.get(
-        'http://backend.vitivipedia.com/wp-json/wp/v2/media/' +
-          post.featured_media
-      );
-      const imgData = res.data;
-      updatedPosts.push({
-        title: post.title.rendered,
-        content: post.content.rendered,
-        route: '/blog/' + post.slug,
-        avatar: Pablo,
-        img: imgData.guid.rendered,
-        author:
-          'http://backend.vitivipedia.com/wp-json/wp/v2/users/' + post.author
-      });
-    });
-
-    console.log('updatedPost', updatedPosts);
-    setBlogData(updatedPosts);
-  };
-
   useEffect(() => {
+    let isMounted = true;
+    const getPosts = async () => {
+      const response = await axios.get(
+        'http://backend.vitivipedia.com/wp-json/vitivipedia/v1/posts'
+      );
+      const posts = response.data; // wordpress format
+      if (isMounted) {
+        setBlogData(posts);
+      }
+    };
+
     getPosts();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -180,7 +161,7 @@ const Blog = () => {
   };
 
   const reorgenizeArticles = articles => {
-    // we need to seperate bookmarked and not bookmarked
+    // we need to separate bookmarked and not bookmarked
 
     const bookmarkedArticles = articles.filter(
       (item, index) => item.bookmarked
@@ -191,25 +172,25 @@ const Blog = () => {
     );
 
     if (bookmarkedArticles.length === 0) {
-      return [...articlesList].reverse();
+      return [...blogData].reverse();
     } else {
       return [...bookmarkedArticles, ...notBookmarkedArticles];
     }
   };
 
-  // useEffect(() => {
-  //   let updatedBlogData = blogData.map(item => {
-  //     if (localStorage.getItem(item.title)) {
-  //       return {
-  //         ...item,
-  //         bookmarked: true
-  //       };
-  //     }
-  //     return item;
-  //   });
-  //   const updatedData = reorgenizeArticles(updatedBlogData);
-  //   setBlogData(updatedData);
-  // }, []);
+  useEffect(() => {
+    let updatedBlogData = blogData.map(item => {
+      if (localStorage.getItem(item.title)) {
+        return {
+          ...item,
+          bookmarked: true
+        };
+      }
+      return item;
+    });
+    const updatedData = reorgenizeArticles(updatedBlogData);
+    setBlogData(updatedData);
+  }, []);
 
   const toggleBookMarked = item => {
     // toogle bookmark
@@ -249,59 +230,65 @@ const Blog = () => {
         </Grid>
 
         <Grid container spacing={3}>
-          {
-            //getPageArticles(blogData).map((item, idx) => (
-            blogData.map((item, idx) => (
-              <Grid item xs={12} sm={6} md={4} key={item.title + idx}>
-                <Link to={item.route} style={{ textDecoration: 'none' }}>
-                  <Card className={classes.root}>
-                    <CardActionArea>
-                      <CardMedia
-                        className={classes.media}
-                        image={item.img.toString()}
+          {getPageArticles(blogData).map((item, idx) => (
+            <Grid item xs={12} sm={6} md={4} key={item.title + idx}>
+              <Link
+                to={{ pathname: item.route, state: { data: item } }}
+                style={{ textDecoration: 'none' }}
+              >
+                <Card>
+                  <CardActionArea>
+                    <CardContent>
+                      <div className={classes.mediaContainer}>
+                        {item.img && (
+                          <img
+                            src={item.img}
+                            alt={item.img}
+                            className={classes.media}
+                          />
+                        )}
+                      </div>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {item.title}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                        dangerouslySetInnerHTML={{ __html: item.excerpt }}
                       />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                          {item.title}
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          color="textSecondary"
-                          component="p"
-                        >
-                          {item.content}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                    <CardActions className={classes.cardActions}>
-                      <Box className={classes.author}>
-                        <Avatar
-                          img
-                          src={item.avatar && item.avatar.toString()}
-                          alt="Pablo"
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions className={classes.cardActions}>
+                    <Box className={classes.author}>
+                      {item.avatar && (
+                        <img
+                          src={item.avatar}
+                          alt={item.avatar}
+                          className={classes.avatar}
                         />
-                        <Box ml={2}>
-                          <Typography variant="subtitle2" component="p">
-                            {item.author}
-                          </Typography>
-                        </Box>
+                      )}
+                      <Box ml={2}>
+                        <Typography variant="subtitle2" component="p">
+                          {item.author}
+                        </Typography>
                       </Box>
-                      <Box>
-                        <BookmarkBorderIcon
-                          style={{ color: item.bookmarked ? 'red' : 'gray' }}
-                          onClick={e => {
-                            toggleBookMarked(item);
-                            e.stopPropagation();
-                            e.preventDefault();
-                          }}
-                        />
-                      </Box>
-                    </CardActions>
-                  </Card>
-                </Link>
-              </Grid>
-            ))
-          }
+                    </Box>
+                    <Box>
+                      <BookmarkBorderIcon
+                        style={{ color: item.bookmarked ? 'red' : 'gray' }}
+                        onClick={e => {
+                          toggleBookMarked(item);
+                          e.stopPropagation();
+                          e.preventDefault();
+                        }}
+                      />
+                    </Box>
+                  </CardActions>
+                </Card>
+              </Link>
+            </Grid>
+          ))}
         </Grid>
         <Box my={4} className={classes.paginationContainer}>
           <Pagination

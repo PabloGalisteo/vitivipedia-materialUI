@@ -20,75 +20,38 @@ const styles = makeStyles(theme => ({
   marginBottomButton: {
     marginBottom: '9.4em'
   },
-  hideButtons: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
-  },
-  navigationToggler: {
-    [theme.breakpoints.up('md')]: {
-      display: 'none'
-    }
-  },
   mapContainer: {
-    backgroundColor: '#daf7ff',
-    margin: '0.5em'
+    backgroundColor: '#F2F2F2'
   },
-  comunidadesStyleBtn: {
-    backgroundColor: '#EEEEEE',
-    margin: '1em',
-    '&:hover': {
-      backgroundColor: '#f78550'
-    }
-  },
+
   mapBorderRadius: {
     borderRadius: '1em',
-    overflow: 'scroll'
+    overflow: 'hidden'
   },
   mapRoot: {
-    flex: 1
+    flex: 1,
+    marginRight: '-0.5em',
+    marginLeft: '-0.5em',
+    marginTop: '1em'
   },
   containerButtons: {
     display: 'flex',
     justifyContent: 'space-between'
   },
   arrowBackStyle: {
+    color: 'black',
+    right: 0,
+    position: 'absolute',
+    marginTop: '-2.9em',
+    marginRight: '1em',
     backgroundColor: '#EEEEEE',
     '&:hover': {
-      backgroundColor: '#EEEEEE'
-    },
-    height: '2.6em',
-    marginTop: '0.5em',
-    marginRight: '0.5em'
-  },
-  favBtn: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    margin: '0.5em',
-    [theme.breakpoints.up('lg')]: {
-      fontSize: '2em',
-      marginLeft: '7.8em'
-    },
-    [theme.breakpoints.down('md')]: {
-      fontSize: '1.5em',
-      marginLeft: '1em'
-    },
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '1em',
-      marginRight: '0.5em'
-    }
-  },
-  favBtnStyle: {
-    color: '#000',
-    backgroundColor: '#BFBFBF',
-    '&:visited, &:focus, &:active': {
       backgroundColor: '#BFBFBF'
-    }
+    },
+    margin: '1em 0'
   },
-  notShowArrowBiggerScreens: {
-    [theme.breakpoints.up('md')]: {
-      display: 'none'
-    }
+  drawer: {
+    background: '#F2F2F2'
   },
   bestWinesSentenceStyle: {
     color: '#000',
@@ -100,32 +63,29 @@ const styles = makeStyles(theme => ({
     marginTop: '0.5em',
     marginBottom: '0.5em',
     [theme.breakpoints.up('lg')]: {
-      fontSize: '2em',
-      marginLeft: '7.8em'
+      fontSize: '2em'
     },
     [theme.breakpoints.down('md')]: {
-      fontSize: '1.5em',
-      marginLeft: '1em'
+      fontSize: '1.5em'
     },
     [theme.breakpoints.down('sm')]: {
-      fontSize: '1em',
-      marginRight: '0.5em'
+      fontSize: '1em'
     }
   },
   bestWineContainer: {
-    position: 'relative',
-    [theme.breakpoints.up('lg')]: {
-      top: '-6em'
-    },
-    [theme.breakpoints.up('md')]: {
-      top: '-6em'
-    }
+    marginTop: '1em'
   },
   mapHeight: {
     minHeight: '300px',
     '@media(min-width: 500px)': {
       minHeight: '580px'
     }
+  },
+  paperStyle: {
+    padding: '2em',
+    marginBottom: '2em',
+    fontSize: '1.2em',
+    fontFamily: 'Roboto'
   }
 }));
 

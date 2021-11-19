@@ -1,30 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 
-import CardComponent from '../cards/CardComponent';
-import winelist from '../../wineList/list';
+import RegionContainerWineCard from '../RegionContainerWineCard';
+//import winelist from '../../wineList/list';
 
-const FavoriteWines = () => {
-  const [favWines, setFavWines] = useState([]);
-
-  useEffect(() => {
-    const favList = [];
-    winelist.forEach(item => {
-      const isWineFav = localStorage.getItem(item.name);
-      if (isWineFav) {
-        favList.push(item);
-      }
-    });
-
-    setFavWines(favList);
-  }, []);
-
+const FavoriteWines = ({ favWines }) => {
   return (
     <div style={{ minWidth: '250px', padding: '5.5em 1em 1em 1em' }}>
       {favWines.map((item, idx) => {
         return (
           <Grid item key={idx + item.name}>
-            <CardComponent
+            <RegionContainerWineCard
               name={item.name}
               region={item.region}
               dorigen={item.do}
@@ -42,4 +29,10 @@ const FavoriteWines = () => {
   );
 };
 
-export default FavoriteWines;
+const mapStateToProps = state => {
+  return {
+    favWines: state.fevoriteWineList
+  };
+};
+
+export default connect(mapStateToProps)(FavoriteWines);
