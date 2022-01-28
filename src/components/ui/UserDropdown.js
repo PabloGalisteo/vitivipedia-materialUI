@@ -31,14 +31,14 @@ const UserDropdown = ({ anchorEl, handleClose, logout }) => {
         >
           My account
         </MenuItem>
-        <MenuItem
+        {/* <MenuItem
           onClick={() => {
             handleClose();
             history.push('/carrito');
           }}
         >
           Carrito
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem
           onClick={() => {
             handleClose();

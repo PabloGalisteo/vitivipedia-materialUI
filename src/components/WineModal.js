@@ -145,7 +145,7 @@ const WineModal = ({
                   </Box>
 
                   <Box className={classes.ActionButtons}>
-                    <QuantityCounter
+                    {/* <QuantityCounter
                       wineStock={wine.stock}
                       onChange={setQuantity}
                       quantity={quantity}
@@ -166,7 +166,7 @@ const WineModal = ({
                       className={classes.cartBtn}
                     >
                       Añadir al carrito
-                    </Button>
+                    </Button> */}
                     <Button
                       variant="outlined"
                       style={{

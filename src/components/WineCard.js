@@ -146,7 +146,7 @@ const WineCard = ({ wine }) => {
                 </Box>
               </Box>
             </Grid>
-            <Grid item xs={12} style={{ padding: '1em' }}>
+            {/* <Grid item xs={12} style={{ padding: '1em' }}>
               <Divider style={{ marginTop: '0.7em', marginBottom: '0.7em' }} />
               <Box style={{ display: 'flex', alignItems: 'flex-end' }}>
                 {wine.price && (
@@ -181,7 +181,7 @@ const WineCard = ({ wine }) => {
                   </Button>
                 </Box>
               </Box>
-            </Grid>
+            </Grid> */}
           </Grid>
         </CardContent>
       </Card>

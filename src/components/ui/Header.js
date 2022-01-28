@@ -259,7 +259,7 @@ const Header = props => {
             label={route.name}
           />
         ))}
-        />
+        {/* /> */}
         {props.favWines.length > 0 && (
           <Tab
             className={classes.tab}
@@ -368,7 +368,7 @@ const Header = props => {
               </ListItemText>
             </ListItem>
           )}
-          {props.user && (
+          {/* {props.user && (
             <ListItem
               divider
               button
@@ -392,7 +392,7 @@ const Header = props => {
                 &nbsp;&nbsp;&nbsp; Carrito
               </ListItemText>
             </ListItem>
-          )}
+          )} */}
           {!props.user && (
             <ListItem divider button onClick={() => history.push('/login')}>
               <ListItemText

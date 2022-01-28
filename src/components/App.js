@@ -18,7 +18,7 @@ import Cookies from '../pages/Cookies';
 import Afiliacion from '../pages/Afiliacion';
 import Productores from '../pages/Productores';
 import Producer from '../pages/Producer';
-import Cart from '../pages/Cart';
+// import Cart from '../pages/Cart';
 
 import actions from '../store/actions';
 import winelist from '../wineList/list';
@@ -300,7 +300,7 @@ function App({
           <Route exact path="/contacto" component={() => <Contacto />} />
           <Route exact path="/productores" component={() => <Productores />} />
           <Route exact path="/aviso-legal" component={() => <AvisoLegal />} />
-          <Route exact path="/carrito" component={() => <Cart />} />
+          {/* <Route exact path="/carrito" component={() => <Cart />} /> */}
           <Route exact path="/registro" component={() => <Register />} />
           <Route exact path="/login" component={() => <Login />} />
           {user && (
